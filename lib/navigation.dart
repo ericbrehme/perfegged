@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:perfegged/main.dart';
 
 class Navigation extends StatelessWidget {
 const Navigation({ Key? key }) : super(key: key);
@@ -18,19 +19,18 @@ const Navigation({ Key? key }) : super(key: key);
     ),
   );
   
+  // ignore: prefer_const_constructors
   Widget buildHeader(BuildContext context) => Padding(
     padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-    child: Container(
-      child: Center(
-          child: const Text(
-            'Menu',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+    child: const Center(
+        child: Text(
+          'Menu',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
         ),
-    ),
+      ),
   );
 
   Widget buildMenuItems(BuildContext context) => Column(
@@ -38,22 +38,30 @@ const Navigation({ Key? key }) : super(key: key);
       ListTile(
         leading: const Icon(Icons.home),
         title: const Text('Home'),
-        onTap: () {},
+        onTap: () {
+          Navigator.popUntil(context, ModalRoute.withName('/homescreen_setup'));
+        },
       ),
       ListTile(
         leading: const Icon(Icons.settings),
         title: const Text('Settings'),
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, '/settings');
+        },
       ),
       ListTile(
         leading: const Icon(Icons.help),
         title: const Text('Help'),
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, '/help');
+        },
       ),
       ListTile(
         leading: const Icon(Icons.info),
         title: const Text('About'),
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, '/about');
+        },
       ),
     ],
   );
