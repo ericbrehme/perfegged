@@ -19,16 +19,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/homescreen_setup',
       routes: {
-        '/': (context) => Loadingscreen(),
-        '/homescreen_setup': (context) => HomescreenSetup(),
-        '/homescreen_cook': (context) => HomescreenCook(),
-        '/about': (context) => About(),
-        '/presets': (context) => Presets(),
-        '/settings': (context) => Settings(),
-        '/navigation': (context) => Navigation(),
-        '/help': (context) => Help(),
+        '/': (context) => const Loadingscreen(),
+        '/homescreen_setup': (context) => const HomescreenSetup(),
+        '/homescreen_cook': (context) => const HomescreenCook(),
+        '/about': (context) => const About(),
+        '/presets': (context) => const Presets(),
+        '/settings': (context) => const Settings(),
+        '/navigation': (context) => const Navigation(),
+        '/help': (context) => const Help(),
       },
       title: 'Perfegged',
+      theme: ThemeData(
+        // primarySwatch: Colors.grey,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
     );
   }
 }

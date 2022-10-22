@@ -46,6 +46,7 @@ const Navigation({ Key? key }) : super(key: key);
         leading: const Icon(Icons.settings),
         title: const Text('Settings'),
         onTap: () {
+          Navigator.pop(context);
           Navigator.pushNamed(context, '/settings');
         },
       ),
@@ -53,6 +54,7 @@ const Navigation({ Key? key }) : super(key: key);
         leading: const Icon(Icons.help),
         title: const Text('Help'),
         onTap: () {
+          Navigator.pop(context);
           Navigator.pushNamed(context, '/help');
         },
       ),
@@ -60,6 +62,7 @@ const Navigation({ Key? key }) : super(key: key);
         leading: const Icon(Icons.info),
         title: const Text('About'),
         onTap: () {
+          Navigator.pop(context);
           Navigator.pushNamed(context, '/about');
         },
       ),
