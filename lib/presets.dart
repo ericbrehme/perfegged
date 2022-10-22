@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'functional_elements/appbar.dart';
+import 'dataclasses/preset.dart';
 
 class Presets extends StatefulWidget {
   const Presets({ Key? key }) : super(key: key);
@@ -10,8 +12,9 @@ class Presets extends StatefulWidget {
 class _PresetsState extends State<Presets> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+      return Scaffold(
+      appBar: MyAppBar(title: 'Presets'),
+      body: Container(),
     );
   }
 }

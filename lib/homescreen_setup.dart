@@ -15,6 +15,9 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
     return Scaffold(
       appBar: MyAppBar(title: 'Perfegged'),
       drawer: const Navigation(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushNamed(context, '/presets'),
+      ),
     );
   }
 }
