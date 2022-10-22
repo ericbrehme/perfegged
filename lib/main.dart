@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
       },
       title: 'Perfegged',
       theme: ThemeData(
-        // primarySwatch: Colors.grey,
+        //primarySwatch: Colors.grey,
+        colorScheme: ColorScheme.dark(),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
