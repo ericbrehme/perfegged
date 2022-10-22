@@ -7,9 +7,11 @@ class MyAppBar extends AppBar {
     super(
       key: key,
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(title),
           Icon(Icons.egg),
+          Text(title),
+          SizedBox(width: 40,)
         ],
       ),
       centerTitle: true,
