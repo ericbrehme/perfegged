@@ -26,7 +26,7 @@ class _dropDownButtonFromListState extends State<dropDownButtonFromList> {
 
     return DropdownButton(
       value: defaultValue,
-      isExpanded: true,
+      isExpanded: false,
       onChanged: (value) => setState(() => defaultValue = value.toString()),
       items: dropdownList.map((items) {
         return DropdownMenuItem(

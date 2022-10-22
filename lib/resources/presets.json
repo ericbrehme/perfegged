@@ -1,0 +1,16 @@
+{
+  "Preset": [
+    {
+      "id": 1,
+      "eggWeight": 23,
+      "envTemp": 23,
+      "yolkTemp": 67
+    },
+    {
+      "id": 2,
+      "eggWeight": 23,
+      "envTemp": 23,
+      "yolkTemp": 67
+    }
+  ]
+}
