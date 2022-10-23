@@ -27,89 +27,65 @@ class _PresetsState extends State<Presets> {
   late Future<List<Preset>> _presets;
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
     _presets = parseJson('assets/data/presets.json');
   }
 
-  @override
-  Widget build(BuildContext context) {
-        return FutureBuilder<List<Preset>>(
-          future: _presets,
-          builder: (ctx, snapshot) {
-            List<Preset>? presets = snapshot.data;
-            switch (snapshot.connectionState) {
+  Widget futurebuilder(){
+    return FutureBuilder<List<Preset>>(
+      future: _presets,
+      builder:(context, snapshot) {
+        List<Preset>? presets = snapshot.data;
+          switch (snapshot.connectionState) {
               case ConnectionState.done:
               return _buildListView(presets!);
-              default:
-              return _buildLoadingScreen();
-            }
+              default: return Center(
+                child: Container(
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(),
+                ),
+              );
+          };
       }
     );
+    
   }
 
-
-  Widget _buildListView(List<Preset> presets) {
-    return ListView.builder(
-      itemBuilder: (ctx, idx) {
-        return PresetCard(presets[idx]);
-      },
-      itemCount: presets.length,
+ @override
+  Widget build(BuildContext context) {
+      return Scaffold(
+      appBar: MyAppBar(title: 'Presets'),
+      body: futurebuilder(),
     );
   }
-
-  Widget _buildLoadingScreen() {
-    return Center(
-        child: Container(
-        width: 50,
-        height: 50,
-        child: CircularProgressIndicator(),
-        ),
+  
+  Widget _buildListView(List<Preset> presets) {
+      return ListView.builder(
+        itemCount: presets.length,
+        itemBuilder: (context, index) {
+          return Card(
+            key: ValueKey(presets[index].id),
+            margin: const EdgeInsets.all(10),
+            child: ListTile(
+              leading: Text(presets[index].id.toString()),
+              title: Row(
+                children: [
+                  Text('Egg size: '),
+                  Text(presets[index].calcEggSize()),
+                ],
+              ),
+              subtitle: Text(presets[index].yolkTemp.toString()),
+            ),
+          );
+        },
       );
   }
 }
 
 
-class PresetCard extends StatelessWidget{
-  final Preset preset;
 
-  PresetCard(this.preset);
-  
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            width: 0.5,
-          ),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 10, right: 15, bottom: 10),
-            child: Text(
-              preset.id.toString(),
-            ),
-          ),
-          Expanded(
-            child: Text (
-              preset.eggWeight.toString(),
-            )
-          ),
-          Expanded(
-            child: Text(
-              preset.yolkTemp.toString(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
  
 
 

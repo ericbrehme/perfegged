@@ -11,6 +11,15 @@ class Eggsizes{
     'XXL':120
   };
 
+  static const egg_size_eu_max = {
+    'XS':40,
+    'S':53,
+    'M':63,
+    'L':73,
+    'XL':120
+    //alles andere XXL
+  };
+
   // rough average weight of us and canada standard size eggs in grams (Pewee, Jumbo - can be really vague, as ranges are high )
   static const egg_size_na = {
     'Peewee':39,
