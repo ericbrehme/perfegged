@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:perfegged/dataclasses/preset.dart';
 
 List _items = [];
 
@@ -9,13 +10,15 @@ List _items = [];
         .then((jsonStr) => jsonDecode(jsonStr));
 } */
 
-Future parseJson(String path) async {
-  final String response = await rootBundle.loadString(path);
-  final data = await json.decode(response);
-  _items = data['Preset'];
+Future<List<Preset>> parseJson(String path) async {
+  //final String response = await rootBundle.loadString(path);
+  final response = await rootBundle.loadString(path);
+  //final data = json.decode(presets);
+  return 
+  //return data.map((e) => Preset(id: e.id, eggWeight: e.eggWeight, envTemp: e.envTemp, yolkTemp: e.yolkTemp)).toList() as Future<List<Preset>>;
 }
 
-List getDataFromJson(String path) {
+List<Preset> getDataFromJson(String path) {
   parseJson(path);
   //print(_items);
   return _items;
