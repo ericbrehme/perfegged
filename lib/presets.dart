@@ -72,11 +72,11 @@ class _PresetsState extends State<Presets> {
               leading: Text(presets[index].id.toString()),
               title: Row(
                 children: [
-                  Text('Egg size: '),
-                  Text(presets[index].calcEggSize()),
+                  Text('${presets[index].calcEggSize()} (${presets[index].eggWeight}g)'),
                 ],
               ),
-              subtitle: Text(presets[index].yolkTemp.toString()),
+              subtitle: Text('${presets[index].calcYolkConsistency()} (${presets[index].yolkTemp.toString()}°C)'),
+              trailing: Text('${presets[index].minutes.toString()}:${presets[index].seconds.toString()}'),
             ),
           );
         },

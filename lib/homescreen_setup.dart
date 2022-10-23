@@ -15,9 +15,13 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
     return Scaffold(
       appBar: MyAppBar(title: 'Perfegged'),
       drawer: const Navigation(),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: IconButton(
         onPressed: () => Navigator.pushNamed(context, '/presets'),
+        icon: const Icon(Icons.content_paste_search),
+        tooltip: 'Presets',
+        iconSize: 50,
       ),
+      body: Image(image: AssetImage('assets/images/clock.png')),
     );
   }
 }
