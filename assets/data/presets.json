@@ -1,5 +1,4 @@
-{
-  "Preset": [
+[
     {
       "id": 1,
       "eggWeight": 23,
@@ -12,5 +11,4 @@
       "envTemp": 23,
       "yolkTemp": 67
     }
-  ]
-}
+]

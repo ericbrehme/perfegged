@@ -11,15 +11,8 @@ List _items = [];
 } */
 
 Future<List<Preset>> parseJson(String path) async {
-  //final String response = await rootBundle.loadString(path);
-  final response = await rootBundle.loadString(path);
-  //final data = json.decode(presets);
-  return 
-  //return data.map((e) => Preset(id: e.id, eggWeight: e.eggWeight, envTemp: e.envTemp, yolkTemp: e.yolkTemp)).toList() as Future<List<Preset>>;
+  final jsondata = await rootBundle.loadString(path);
+  final list = json.decode(jsondata) as List<dynamic>;
+  return list.map((e) => Preset.fromJson(e)).toList();
 }
 
-List<Preset> getDataFromJson(String path) {
-  parseJson(path);
-  //print(_items);
-  return _items;
-}

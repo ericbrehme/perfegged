@@ -22,7 +22,12 @@ class Preset {
     // calculate cooking time from weight which is the average of given standart size (rough)
   }
 
-
+  Preset.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    eggWeight = json['eggWeight'];
+    envTemp = json['envTemp'];
+    yolkTemp = json['yolkTemp'];
+  }
 
 
 
