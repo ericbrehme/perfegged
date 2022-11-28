@@ -7,6 +7,8 @@ import 'package:perfegged/loadingscreen.dart';
 import 'package:perfegged/navigation.dart';
 import 'package:perfegged/presets.dart';
 import 'package:perfegged/settings.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() => runApp(MyApp());
 
@@ -37,4 +39,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

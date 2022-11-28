@@ -39,6 +39,7 @@ dependencies:
 
   # For storing settings data on users device
   shared_preferences: ^2.0.15
+  firebase_core: ^2.3.0
 
 dev_dependencies:
   flutter_test:

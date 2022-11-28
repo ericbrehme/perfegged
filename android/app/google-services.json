@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "25560187645",
+    "project_id": "perfeggd-485d6",
+    "storage_bucket": "perfeggd-485d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25560187645:android:6f39096350efd0602b3494",
+        "android_client_info": {
+          "package_name": "com.example.perfegged"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "25560187645-9rsajhc86kk5rj5bct1hh1b9ra5k0b6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn216h-C1rfxQ1GOacfYbt0ITNGHFIQxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "25560187645-9rsajhc86kk5rj5bct1hh1b9ra5k0b6r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
