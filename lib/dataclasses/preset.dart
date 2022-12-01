@@ -1,30 +1,34 @@
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' as math;
 
 import 'egg_sizes.dart';
+
 class Preset {
-  
-  int id = 0;                // 
-  int eggWeight = 0;         // weight of the egg (may need to be calculated if not given directly by user)
-  int eggCircumference = 0;  // Circumference of the egg (only used when user chooses to)
-  int envTemp = 0;           // temperature in °C of the egg
-  int yolkTemp = 0;          // desired temperature of yolk after cooking (yolk consistency depends on this)
+  int id = 0; //
+  int eggWeight = 0; // weight of the egg (may need to be calculated if not given directly by user)
+  int eggCircumference = 0; // Circumference of the egg (only used when user chooses to)
+  int envTemp = 0; // temperature in °C of the egg
+  int yolkTemp = 0; // desired temperature of yolk after cooking (yolk consistency depends on this)
+  int pressure = 1013; //Pressure of surrounding air in hPa
+  int waterTemp = 100;
   int minutes = 0;
   int seconds = 0;
 
-  Preset({ required this.id, required int eggWeight, required int envTemp, required int yolkTemp }) {
+  Preset({required this.id, required int eggWeight, required int envTemp, required int yolkTemp, int pressure = 1013}) {
     // calculate cooking time from weight (most exact)
     this.eggWeight = eggWeight;
     this.envTemp = envTemp;
     this.yolkTemp = yolkTemp;
+    this.pressure = pressure;
+    waterTemp = calculateWaterTemp().toInt();
     calcTime();
   }
 
-  Preset.fromCircumference({ required int eggCircumference, required int envTemp, required int yolkTemp }) {
+  Preset.fromCircumference({required int eggCircumference, required int envTemp, required int yolkTemp}) {
     // calculate cooking time from circumference (rough)
-
   }
 
-  Preset.fromSize({ required String eggSize, required int envTemp, required int yolkTemp }) {
+  Preset.fromSize({required String eggSize, required int envTemp, required int yolkTemp}) {
     // calculate cooking time from weight which is the average of given standart size (rough)
   }
 
@@ -37,34 +41,31 @@ class Preset {
     // print(Eggsizes.egg_size_eu['XS']);
   }
 
-  calcTime(){
+  calcTime() {
     num time = calculateTimeWeight();
     minutes = time.toInt();
     seconds = ((time - minutes) * 60).toInt();
+    print("time(mm:ss)  ${minutes.toString()}:${seconds.toString()}");
   }
 
-  String calcEggSize(){
-    if( eggWeight < Eggsizes.egg_size_eu_max['XS']!){
+  String calcEggSize() {
+    if (eggWeight < Eggsizes.egg_size_eu_max['XS']!) {
       return 'XS';
     } else if (eggWeight < Eggsizes.egg_size_eu_max['S']!) {
       return 'S';
-    }
-    else if (eggWeight < Eggsizes.egg_size_eu_max['M']!) {
+    } else if (eggWeight < Eggsizes.egg_size_eu_max['M']!) {
       return 'M';
-    }
-    else if (eggWeight < Eggsizes.egg_size_eu_max['L']!) {
+    } else if (eggWeight < Eggsizes.egg_size_eu_max['L']!) {
       return 'L';
-    }
-    else if (eggWeight < Eggsizes.egg_size_eu_max['XL']!) {
+    } else if (eggWeight < Eggsizes.egg_size_eu_max['XL']!) {
       return 'XL';
-    }
-    else {
+    } else {
       return 'XXL';
     }
-  } 
+  }
 
   String calcYolkConsistency() {
-    if (yolkTemp < 64 ) {
+    if (yolkTemp < 64) {
       return 'Liquid';
     } else if (yolkTemp < 66) {
       return 'Merely set';
@@ -74,22 +75,29 @@ class Preset {
       return 'Waxy';
     } else if (yolkTemp < 90) {
       return 'Firm';
-    } else{
+    } else {
       return 'Crumbly';
     }
   }
 
-
   double calculateTimeSize() {
     double time;
-    
-    time = (0.0152 * pow(eggCircumference, 2)) * log(2 * (envTemp - 100) / (yolkTemp - 100));
+    time = (0.0152 * math.pow(eggCircumference, 2)) * math.log(2 * (envTemp - waterTemp) / (yolkTemp - waterTemp));
+    print("time  ${time.toString()}");
     return time;
   }
 
   double calculateTimeWeight() {
     double time;
-    time = (0.451 * pow(eggWeight, 2 / 3)) * log(0.76 * (envTemp - 100) / (yolkTemp - 100));
+    time = (0.451 * math.pow(eggWeight, 2 / 3)) * math.log(0.76 * (envTemp - waterTemp) / (yolkTemp - waterTemp));
+    print("time  ${time.toString()}");
     return time;
   }
-}   
+
+  double calculateWaterTemp() {
+    //returns boiling temperature of water in C° for a given pressure
+    double temp = 1730.63 / (8.07131 - (math.log(pressure / 1.33322387415) / math.ln10)) - 233.426;
+    print("temperature  ${temp.toString()}");
+    return temp;
+  }
+}

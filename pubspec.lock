@@ -36,15 +36,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.16.0"
-  countdown_progress_indicator:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: main
-      resolved-ref: "247d3f36167d2da3e304481a5e4de6e605173094"
-      url: "https://github.com/AndresR173/countdown_progress_indicator.git"
-    source: git
-    version: "0.1.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -116,6 +107,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  infinite_listview:
+    dependency: transitive
+    description:
+      name: infinite_listview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   js:
     dependency: transitive
     description:
@@ -151,6 +149,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
+  numberpicker:
+    dependency: "direct main"
+    description:
+      name: numberpicker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
   path:
     dependency: transitive
     description:

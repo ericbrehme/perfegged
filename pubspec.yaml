@@ -39,12 +39,9 @@ dependencies:
   # For storing settings data on users device
   shared_preferences: ^2.0.15
   firebase_core: ^2.3.0
+  
+  numberpicker: ^2.1.1
 
-  #countdowntimer
-  countdown_progress_indicator:
-    git:
-      url: https://github.com/AndresR173/countdown_progress_indicator.git
-      ref: main
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +67,13 @@ flutter:
   assets:
     - assets/data/
     - assets/images/
+    - assets/sounds/
+
+  plugin:
+    platforms:
+      android:
+        package: com.Mrblueskyai.alarmplayer
+        pluginClass: AlarmplayerPlugin
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
