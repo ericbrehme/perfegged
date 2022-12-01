@@ -3,11 +3,15 @@ import 'package:perfegged/about.dart';
 import 'package:perfegged/help.dart';
 import 'package:perfegged/homescreen_setup.dart';
 import 'package:perfegged/loadingscreen.dart';
+import 'package:perfegged/myLogin.dart';
 import 'package:perfegged/navigation.dart';
 import 'package:perfegged/presets.dart';
 import 'package:perfegged/settings.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -28,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/settings': (context) => const Settings(),
         '/navigation': (context) => const Navigation(),
         '/help': (context) => const Help(),
+        '/login': (context) => const MyLogin()
       },
       title: 'Perfegged',
       theme: ThemeData(
