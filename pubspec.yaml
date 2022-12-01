@@ -32,7 +32,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -40,6 +39,12 @@ dependencies:
   # For storing settings data on users device
   shared_preferences: ^2.0.15
   firebase_core: ^2.3.0
+
+  #countdowntimer
+  countdown_progress_indicator:
+    git:
+      url: https://github.com/AndresR173/countdown_progress_indicator.git
+      ref: main
 
 dev_dependencies:
   flutter_test:
