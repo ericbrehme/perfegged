@@ -1,0 +1,26 @@
+homescreen_setup hübsch machen und alle Funtkionalitäten einbauen. (eier nach Norm?)
+
+homescreen_cook mehrere presets timer
+
+loadingscreen? wo, wann, warum und wie?
+
+speichern von presets
+
+IDs von presets required, sollen aber automatisch generiert werden
+
+maps elevation api (gps Koordinaten)
+
+openweather api pressure
+
+Alarm! AAAlarm!
+
+Tests!?
+
+helpscreen
+
+settings 
+    (speichern und verwenden) 
+    (mehr optionen) 
+    (settings in die firebase-db speichern)
+
+presets unit conversion (F°-C° usw)

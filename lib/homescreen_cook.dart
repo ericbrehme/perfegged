@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm_background_trigger/flutter_alarm_background_trigger.dart';
 import 'package:perfegged/functional_elements/countdown_progress_indicator.dart';
 import 'navigation.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
@@ -15,8 +16,18 @@ class HomescreenCook extends StatefulWidget {
 class _HomescreenCookState extends State<HomescreenCook> {
   final _controller = CountDownController();
   Preset preset;
+  var alarmPlugin = FlutterAlarmBackgroundTrigger();
+  int duration = 0;
+  DateTime? alarmTime;
+  List<AlarmItem> alarms = [];
 
-  _HomescreenCookState({required this.preset});
+  _HomescreenCookState({required this.preset}) {
+    duration = ((preset.calculateTimeWeight()) * (60)).toInt();
+    alarmTime = DateTime.now().add(Duration(seconds: duration));
+    print(alarmTime.toString());
+    alarmPlugin.requestPermission();
+    alarmPlugin.addAlarm(alarmTime!, uid: "com.example.perfegged", screenWakeDuration: Duration(seconds: 20));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +43,7 @@ class _HomescreenCookState extends State<HomescreenCook> {
             valueColor: Colors.red,
             backgroundColor: Colors.blue,
             initialPosition: 0,
-            duration: ((preset.calculateTimeWeight()) * (60)).toInt(),
+            duration: duration,
             timeFormatter: (seconds) {
               return Duration(seconds: seconds).toString().substring(2).split('.')[0];
             },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm_background_trigger/flutter_alarm_background_trigger.dart';
 import 'package:perfegged/about.dart';
 import 'package:perfegged/help.dart';
 import 'package:perfegged/homescreen_setup.dart';
@@ -11,8 +12,9 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FlutterAlarmBackgroundTrigger.initialize();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const Loadingscreen(),
         '/homescreen_setup': (context) => const HomescreenSetup(),
-        //'/homescreen_cook': (context) => const HomescreenCook(),
+        //'/homescreen_cook': (context) => HomescreenCook(),
         '/about': (context) => const About(),
         '/presets': (context) => const Presets(),
         '/settings': (context) => const Settings(),
