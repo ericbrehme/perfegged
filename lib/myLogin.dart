@@ -13,8 +13,8 @@ class MyLogin extends StatefulWidget {
 class _MyLoginState extends State<MyLogin> {
   User? user; // track the authenticated user here
 
-  final _emailInput = TextEditingController(text: 'bob@example.com');
-  final _passInput = TextEditingController(text: 'secret');
+  final _emailInput = TextEditingController(text: 'example@mail.com');
+  final _passInput = TextEditingController(text: 'password');
 
   @override
   void initState() {
@@ -28,16 +28,18 @@ class _MyLoginState extends State<MyLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: 'Settings'),
+      appBar: MyAppBar(title: 'Login'),
       body: SingleChildScrollView(
           child: Column(
         children: [
           SignInButtonBuilder(text: 'Sign in anonymously', icon: Icons.account_circle, onPressed: () => loginAnonymously(), backgroundColor: Colors.blueGrey),
           SignInButton(Buttons.Email, onPressed: () => loginWithEmail(_emailInput.text, _passInput.text)),
+          SizedBox(height: 16),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             SizedBox(width: 150, child: TextField(controller: _emailInput, decoration: InputDecoration(hintText: 'Email'))),
             SizedBox(width: 150, child: TextField(controller: _passInput, obscureText: true, decoration: InputDecoration(hintText: 'Password'))),
           ]),
+          SizedBox(height: 16),
           SignInButton(Buttons.Google, onPressed: () => loginWithGoogle()),
           Container(child: userInfo()),
           ElevatedButton(child: Text('Sign out'), style: ElevatedButton.styleFrom(primary: Colors.red), onPressed: user != null ? () => logout() : null)
