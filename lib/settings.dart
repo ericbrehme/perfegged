@@ -49,6 +49,14 @@ class _SettingsState extends State<Settings> {
               ],
             ),
           ),
+          Spacer(),
+          ElevatedButton(
+            child: Text('Permissions', style: Theme.of(context).textTheme.button),
+            onPressed: () {
+              Navigator.pushNamed(context, '/permissions');
+            },
+          ),
+          SizedBox(height: 24),
         ],
       ),
     );
