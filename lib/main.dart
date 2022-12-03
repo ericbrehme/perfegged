@@ -51,7 +51,9 @@ class MyApp extends StatelessWidget {
       title: 'Perfegged',
       theme: ThemeData(
         //primarySwatch: Colors.grey,
-        colorScheme: ColorScheme.dark(),
+        colorScheme: const ColorScheme.dark(
+          primary: Color.fromARGB(255, 40, 121, 123),
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
