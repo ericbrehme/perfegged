@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:perfegged/functional_elements/countdown_progress_indicator.dart';
+import 'package:vibration/vibration.dart';
 import 'navigation.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
 import 'package:perfegged/dataclasses/preset.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class HomescreenCook extends StatefulWidget {
   final Preset preset;
@@ -24,14 +27,21 @@ class _HomescreenCookState extends State<HomescreenCook> {
       appBar: MyAppBar(title: 'Perfegged'),
       drawer: const Navigation(),
       body: Center(
-        child: SizedBox(
+        
+      
+        child:  SizedBox(
+         
+
           height: 300,
           width: 300,
-          child: CountDownProgressIndicator(
+
+          child:CountDownProgressIndicator(
             controller: _controller,
             valueColor: Colors.red,
+          
             backgroundColor: Colors.blue,
             initialPosition: 0,
+  
             duration: ((preset.calculateTimeWeight()) * (60)).toInt(),
             timeFormatter: (seconds) {
               return Duration(seconds: seconds).toString().substring(2).split('.')[0];
@@ -39,10 +49,11 @@ class _HomescreenCookState extends State<HomescreenCook> {
             timeTextStyle: Theme.of(context).textTheme.headline6,
             labelTextStyle: Theme.of(context).textTheme.headline6,
             text: 'mm:ss',
-            onComplete: () => null,
+            onComplete: () => FlutterRingtonePlayer.play(fromAsset: "assets/sounds/alarm.wav",looping: false),
           ),
         ),
       ),
     );
   }
+ 
 }

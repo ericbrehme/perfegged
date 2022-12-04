@@ -121,11 +121,15 @@ class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Stack(
+      
+      child:   Stack( 
         children: [
+    
           SizedBox(
+         
             height: double.infinity,
             width: double.infinity,
+          
             child: CircularProgressIndicator(
               strokeWidth: widget.strokeWidth,
               backgroundColor: widget.backgroundColor,
@@ -134,12 +138,15 @@ class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
               valueColor: AlwaysStoppedAnimation<Color>(widget.valueColor),
               value: _animation.value / widget.duration,
             ),
+           
           ),
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
+              
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                
                 children: [
                   Text(
                     widget.timeFormatter?.call(

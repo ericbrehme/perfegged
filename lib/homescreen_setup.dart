@@ -123,6 +123,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
             onPressed: () {
               Preset preset = Preset(id: 100, eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue.toInt());
+              
               Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomescreenCook(preset: preset)));
             },
           ),
