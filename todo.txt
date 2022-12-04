@@ -8,9 +8,9 @@ speichern von presets
 
 IDs von presets required, sollen aber automatisch generiert werden
 
-maps elevation api (gps Koordinaten)
+(done) maps elevation api (gps Koordinaten)
 
-openweather api pressure
+(done) openweather api pressure
 
 Alarm! AAAlarm!
 

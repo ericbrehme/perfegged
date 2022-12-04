@@ -10,16 +10,18 @@ class Preset {
   int envTemp = 0; // temperature in °C of the egg
   int yolkTemp = 0; // desired temperature of yolk after cooking (yolk consistency depends on this)
   int pressure = 1013; //Pressure of surrounding air in hPa
+  int elevation = 0; //elevation in meters above sea level
   int waterTemp = 100;
   int minutes = 0;
   int seconds = 0;
 
-  Preset({required this.id, required int eggWeight, required int envTemp, required int yolkTemp, int pressure = 1013}) {
+  Preset({required this.id, required int eggWeight, required int envTemp, required int yolkTemp, int pressure = 1013, int elevation = 0}) {
     // calculate cooking time from weight (most exact)
     this.eggWeight = eggWeight;
     this.envTemp = envTemp;
     this.yolkTemp = yolkTemp;
     this.pressure = pressure;
+    this.elevation = elevation;
     waterTemp = calculateWaterTemp().toInt();
     calcTime();
   }
@@ -96,6 +98,8 @@ class Preset {
 
   double calculateWaterTemp() {
     //returns boiling temperature of water in C° for a given pressure
+    //num pressureAtElevation = pressure * (math.pow((1 - 6.5 * elevation) / 288150, 5.255));
+    //print(pressureAtElevation);
     double temp = 1730.63 / (8.07131 - (math.log(pressure / 1.33322387415) / math.ln10)) - 233.426;
     print("temperature  ${temp.toString()}");
     return temp;

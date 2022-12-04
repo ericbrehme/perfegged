@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:perfegged/homescreen_cook.dart';
+import 'package:perfegged/reusable_functions/jsonparser.dart';
 import 'navigation.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:perfegged/dataclasses/preset.dart';
 import 'package:location/location.dart';
+import 'dart:math' as math;
 
 class HomescreenSetup extends StatefulWidget {
   const HomescreenSetup({Key? key}) : super(key: key);
@@ -16,10 +18,11 @@ class HomescreenSetup extends StatefulWidget {
 class _HomescreenSetupState extends State<HomescreenSetup> {
   int _weightValue = 10;
   int _temperatureValue = 8;
-  int _pressureValue = 1015;
+  num _pressureValue = 1015;
   int _yolkTemp = 75;
   var _locationData;
   String locText = "Loc: unknown";
+  List<String> sizeList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             itemCount: 5,
             itemWidth: 100,
             axis: Axis.horizontal,
-            value: _pressureValue,
+            value: _pressureValue.toInt(),
             minValue: 300,
             maxValue: 1500,
             step: 10,
@@ -85,9 +88,13 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
                 onPressed: () async {
                   _locationData = await _initLocationService();
                   //print("${_locationData.latitude} ${_locationData.longitude}");
+                  var elevation = await parseMapsHTTP(_locationData);
+                  var pressure = await parseWeatherHTTP(_locationData);
                   setState(() {
-                    locText = ("Loc: ${_locationData.latitude}, ${_locationData.longitude}");
+                    locText = ("Loc: (${_locationData.latitude}, ${_locationData.longitude}) @${elevation.toInt()}m");
+                    _pressureValue = (pressure * (math.pow((1 - (6.5 * elevation) / 288150), 5.255)));
                   });
+                  print(_pressureValue);
                 },
               ),
               Padding(
@@ -115,7 +122,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             child: Text('Start Timer', style: Theme.of(context).textTheme.button),
             style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
             onPressed: () {
-              Preset preset = Preset(id: 100, eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue);
+              Preset preset = Preset(id: 100, eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue.toInt());
               Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomescreenCook(preset: preset)));
             },
           ),

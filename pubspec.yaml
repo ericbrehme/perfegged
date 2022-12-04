@@ -46,6 +46,8 @@ dependencies:
   google_sign_in: ^5.4.2
   permission_handler: ^10.2.0
   location: ^4.4.0
+  http: ^0.13.5
+  weather: ^2.0.1
 
 
 dev_dependencies:
