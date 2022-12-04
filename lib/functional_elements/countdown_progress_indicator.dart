@@ -68,13 +68,16 @@ class CountDownProgressIndicator extends StatefulWidget {
   _CountDownProgressIndicatorState createState() => _CountDownProgressIndicatorState();
 }
 
-class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator> with SingleTickerProviderStateMixin {
+class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator> with TickerProviderStateMixin {
   late Animation<double> _animation;
   late AnimationController _animationController;
+  late AnimationController _radiusController;
+  late Animation<double> _radiusAnimation;
 
   @override
   void dispose() {
     _animationController.dispose();
+    _radiusController.dispose();
     super.dispose();
   }
 
@@ -87,16 +90,27 @@ class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
         seconds: widget.duration,
       ),
     );
+    _radiusController = AnimationController(
+        vsync: this,
+        duration: Duration(
+          seconds: widget.duration,
+        ));
     _animation = Tween<double>(
       begin: widget.initialPosition.toDouble(),
       end: widget.duration.toDouble(),
     ).animate(_animationController);
-
+    _radiusAnimation = Tween<double>(begin: 0, end: 1).animate(_radiusController);
     _animationController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) widget.onComplete?.call();
+    });
+    _radiusController.addStatusListener((status) {
       if (status == AnimationStatus.completed) widget.onComplete?.call();
     });
 
     _animationController.addListener(() {
+      setState(() {});
+    });
+    _radiusController.addListener(() {
       setState(() {});
     });
 
@@ -113,6 +127,7 @@ class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
 
   void onAnimationStart() {
     _animationController.forward(from: 0);
+    _radiusController.forward(from: 0);
   }
 
   @override
@@ -125,9 +140,14 @@ class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
           Container(
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [Color.fromARGB(255, 255, 255, 255), Colors.orange],
-                  ))),
+                  gradient:
+                      RadialGradient(colors: [Color.fromARGB(255, 164, 164, 164), Color.fromARGB(255, 255, 255, 255)], radius: 1 - _radiusAnimation.value))),
+          Container(
+              margin: EdgeInsets.all(50),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient:
+                      RadialGradient(colors: [Color.fromARGB(255, 255, 226, 184), Color.fromARGB(255, 255, 157, 9)], radius: 1.5 - _radiusAnimation.value))),
           SizedBox(
             height: double.infinity,
             width: double.infinity,
@@ -190,6 +210,7 @@ class CountDownController {
   void start() {
     if (!_state.widget.autostart) {
       _state._animationController.forward(from: _state.widget.initialPosition.toDouble());
+      _state._radiusController.forward(from: _state.widget.initialPosition.toDouble());
     }
   }
 

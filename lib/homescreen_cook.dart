@@ -27,33 +27,30 @@ class _HomescreenCookState extends State<HomescreenCook> {
       appBar: MyAppBar(title: 'Perfegged'),
       drawer: const Navigation(),
       body: Center(
-        
-      
-        child:  SizedBox(
-         
-
+        child: SizedBox(
           height: 300,
           width: 300,
-
-          child:CountDownProgressIndicator(
+          child: CountDownProgressIndicator(
             controller: _controller,
             valueColor: Colors.red,
-          
             backgroundColor: Colors.blue,
             initialPosition: 0,
-  
             duration: ((preset.calculateTimeWeight()) * (60)).toInt(),
             timeFormatter: (seconds) {
               return Duration(seconds: seconds).toString().substring(2).split('.')[0];
             },
-            timeTextStyle: Theme.of(context).textTheme.headline6,
+            timeTextStyle: TextStyle(color: Colors.black),
             labelTextStyle: Theme.of(context).textTheme.headline6,
             text: 'mm:ss',
-            onComplete: () => FlutterRingtonePlayer.play(fromAsset: "assets/sounds/alarm.wav",looping: false),
+            onComplete: () => alarm(),
           ),
         ),
       ),
     );
   }
- 
+
+  void alarm() {
+    FlutterRingtonePlayer.play(fromAsset: "assets/sounds/alarm.wav", looping: false);
+    Vibration.vibrate(duration: 500);
+  }
 }
