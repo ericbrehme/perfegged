@@ -65,12 +65,10 @@ class CountDownProgressIndicator extends StatefulWidget {
         super(key: key);
 
   @override
-  _CountDownProgressIndicatorState createState() =>
-      _CountDownProgressIndicatorState();
+  _CountDownProgressIndicatorState createState() => _CountDownProgressIndicatorState();
 }
 
-class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
-    with SingleTickerProviderStateMixin {
+class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator> with SingleTickerProviderStateMixin {
   late Animation<double> _animation;
   late AnimationController _animationController;
 
@@ -121,15 +119,18 @@ class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      
-      child:   Stack( 
+      child: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
-    
+          Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [Color.fromARGB(255, 255, 255, 255), Colors.orange],
+                  ))),
           SizedBox(
-         
             height: double.infinity,
             width: double.infinity,
-          
             child: CircularProgressIndicator(
               strokeWidth: widget.strokeWidth,
               backgroundColor: widget.backgroundColor,
@@ -138,25 +139,17 @@ class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
               valueColor: AlwaysStoppedAnimation<Color>(widget.valueColor),
               value: _animation.value / widget.duration,
             ),
-           
           ),
           Center(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                
                 children: [
                   Text(
-                    widget.timeFormatter?.call(
-                            (widget.duration - _animation.value).ceil()) ??
-                        (widget.duration - _animation.value).toStringAsFixed(0),
-                    style: widget.timeTextStyle ??
-                        Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600),
+                    widget.timeFormatter?.call((widget.duration - _animation.value).ceil()) ?? (widget.duration - _animation.value).toStringAsFixed(0),
+                    style:
+                        widget.timeTextStyle ?? Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w600),
                   ),
                   if (widget.text != null)
                     Text(
@@ -171,7 +164,7 @@ class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
                 ],
               ),
             ),
-          ),
+          )
         ],
       ),
     );
@@ -196,8 +189,7 @@ class CountDownController {
   /// This method works when [autostart] is false
   void start() {
     if (!_state.widget.autostart) {
-      _state._animationController
-          .forward(from: _state.widget.initialPosition.toDouble());
+      _state._animationController.forward(from: _state.widget.initialPosition.toDouble());
     }
   }
 
