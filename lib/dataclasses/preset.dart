@@ -105,3 +105,12 @@ String calcYolkConsistency(yolkTemp) {
     return 'Crumbly';
   }
 }
+
+double calculateWaterTemp(num pressure) {
+  //returns boiling temperature of water in C° for a given pressure
+  //num pressureAtElevation = pressure * (math.pow((1 - 6.5 * elevation) / 288150, 5.255));
+  //print(pressureAtElevation);
+  double temp = 1730.63 / (8.07131 - (math.log(pressure / 1.33322387415) / math.ln10)) - 233.426;
+  print("temperature  ${temp.toString()}");
+  return temp;
+}

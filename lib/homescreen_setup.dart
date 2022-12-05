@@ -21,7 +21,9 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
   int _weightValue = 10;
   int _temperatureValue = 8;
   num _pressureValue = 1015;
-  int _yolkTemp = 75;
+  int _yolkTemp = 70;
+  int _maxWaterTemp = 100;
+  int _waterTemp = 100;
   String _yolkConsistency = "soft liquid";
   var _locationData;
   String locText = "Loc: unknown";
@@ -80,7 +82,16 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             maxValue: 1500,
             step: 10,
             haptics: true,
-            onChanged: (value) => setState(() => _pressureValue = value),
+            onChanged: (value) => setState(() {
+              _pressureValue = value;
+              _waterTemp = calculateWaterTemp(_pressureValue).toInt();
+              if (_yolkTemp > _waterTemp) {
+                _yolkTemp = _waterTemp;
+              }
+              if (_waterTemp <= 100) {
+                _maxWaterTemp = _waterTemp;
+              }
+            }),
           ),
           Text('or fetch location to find pressure', style: Theme.of(context).textTheme.headline6),
           Row(
@@ -115,7 +126,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             axis: Axis.horizontal,
             value: _yolkTemp,
             minValue: 60,
-            maxValue: 100,
+            maxValue: _maxWaterTemp,
             step: 1,
             haptics: true,
             onChanged: (value) => setState(() {
@@ -133,18 +144,18 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
                     constraints: BoxConstraints.expand(),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        gradient: RadialGradient(colors: [Color.fromARGB(255, 164, 164, 164), Color.fromARGB(255, 255, 255, 255)], radius: 0.5))),
-                Flexible(
-                  fit: FlexFit.loose,
+                        gradient: RadialGradient(
+                            colors: [Color.fromARGB(255, 164, 164, 164), Color.fromARGB(255, 255, 255, 255)], radius: 1 - (_yolkTemp - 35) * 0.015))),
+                Center(
                   child: FractionallySizedBox(
-                    alignment: Alignment.center,
-                    heightFactor: 0.8,
-                    widthFactor: 0.8,
+                    heightFactor: 0.65,
                     child: Container(
+                        //alignment: AlignmentDirectional(0.5, 0.5),
                         //margin: EdgeInsets.fromWindowPadding(MediaQuery.of(context).viewPadding, MediaQuery.of(context).copyWith().devicePixelRatio),
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            gradient: RadialGradient(colors: [Color.fromARGB(255, 255, 226, 184), Color.fromARGB(255, 255, 157, 9)], radius: 0.5))),
+                            gradient: RadialGradient(
+                                colors: [Color.fromARGB(255, 255, 226, 184), Color.fromARGB(255, 255, 157, 9)], radius: 1 - (_yolkTemp - 50) * 0.02))),
                   ),
                 ),
               ],
