@@ -40,7 +40,7 @@ class _HomescreenCookState extends State<HomescreenCook> {
               return Duration(seconds: seconds).toString().substring(2).split('.')[0];
             },
             timeTextStyle: TextStyle(color: Colors.black),
-            labelTextStyle: Theme.of(context).textTheme.headline6,
+            labelTextStyle: TextStyle(color: Colors.black),
             text: 'mm:ss',
             onComplete: () => alarm(),
           ),

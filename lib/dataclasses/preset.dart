@@ -66,22 +66,6 @@ class Preset {
     }
   }
 
-  String calcYolkConsistency() {
-    if (yolkTemp < 64) {
-      return 'Liquid';
-    } else if (yolkTemp < 66) {
-      return 'Merely set';
-    } else if (yolkTemp < 70) {
-      return 'Soft runny';
-    } else if (yolkTemp < 80) {
-      return 'Waxy';
-    } else if (yolkTemp < 90) {
-      return 'Firm';
-    } else {
-      return 'Crumbly';
-    }
-  }
-
   double calculateTimeSize() {
     double time;
     time = (0.0152 * math.pow(eggCircumference, 2)) * math.log(2 * (envTemp - waterTemp) / (yolkTemp - waterTemp));
@@ -106,3 +90,18 @@ class Preset {
   }
 }
 
+String calcYolkConsistency(yolkTemp) {
+  if (yolkTemp < 64) {
+    return 'Liquid';
+  } else if (yolkTemp < 66) {
+    return 'Merely set';
+  } else if (yolkTemp < 70) {
+    return 'Soft runny';
+  } else if (yolkTemp < 80) {
+    return 'Waxy';
+  } else if (yolkTemp < 90) {
+    return 'Firm';
+  } else {
+    return 'Crumbly';
+  }
+}

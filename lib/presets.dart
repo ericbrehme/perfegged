@@ -71,7 +71,7 @@ class _PresetsState extends State<Presets> {
                 Text('${presets[index].calcEggSize()} (${presets[index].eggWeight}g)'),
               ],
             ),
-            subtitle: Text('${presets[index].calcYolkConsistency()} (${presets[index].yolkTemp.toString()}°C)'),
+            subtitle: Text('${calcYolkConsistency(presets[index].yolkTemp)} (${presets[index].yolkTemp.toString()}°C)'),
             trailing: Text('${presets[index].minutes.toString()}:${presets[index].seconds.toString()}'),
           ),
         );

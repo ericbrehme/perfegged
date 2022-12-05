@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:perfegged/homescreen_cook.dart';
 import 'package:perfegged/reusable_functions/jsonparser.dart';
@@ -20,6 +22,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
   int _temperatureValue = 8;
   num _pressureValue = 1015;
   int _yolkTemp = 75;
+  String _yolkConsistency = "soft liquid";
   var _locationData;
   String locText = "Loc: unknown";
   List<String> sizeList = [];
@@ -115,15 +118,46 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             maxValue: 100,
             step: 1,
             haptics: true,
-            onChanged: (value) => setState(() => _yolkTemp = value),
+            onChanged: (value) => setState(() {
+              _yolkTemp = value;
+              _yolkConsistency = calcYolkConsistency(_yolkTemp);
+            }),
           ),
-          Spacer(),
+          Text(_yolkConsistency, style: Theme.of(context).textTheme.bodyText1),
+          SizedBox(height: 16),
+          Expanded(
+            child: Stack(
+              alignment: AlignmentDirectional.bottomCenter,
+              children: [
+                Container(
+                    constraints: BoxConstraints.expand(),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: RadialGradient(colors: [Color.fromARGB(255, 164, 164, 164), Color.fromARGB(255, 255, 255, 255)], radius: 0.5))),
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: FractionallySizedBox(
+                    alignment: Alignment.center,
+                    heightFactor: 0.8,
+                    widthFactor: 0.8,
+                    child: Container(
+                        //margin: EdgeInsets.fromWindowPadding(MediaQuery.of(context).viewPadding, MediaQuery.of(context).copyWith().devicePixelRatio),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: RadialGradient(colors: [Color.fromARGB(255, 255, 226, 184), Color.fromARGB(255, 255, 157, 9)], radius: 0.5))),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          //Spacer(),
+          SizedBox(height: 16),
           ElevatedButton(
             child: Text('Start Timer', style: Theme.of(context).textTheme.button),
             style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
             onPressed: () {
               Preset preset = Preset(id: 100, eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue.toInt());
-              
+
               Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomescreenCook(preset: preset)));
             },
           ),
