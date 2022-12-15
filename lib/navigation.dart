@@ -42,14 +42,6 @@ class Navigation extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, '/settings');
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.help),
             title: const Text('Help'),
             onTap: () {

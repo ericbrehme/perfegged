@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 
 class dropDownButtonFromList extends StatefulWidget {
   final List<String> stringList; // List of options for dropdown
-  const dropDownButtonFromList({Key? key, required this.stringList}) : super(key: key);
+  final String? value;
+  const dropDownButtonFromList({Key? key, required this.stringList, this.value}) : super(key: key);
 
   @override
-  State<dropDownButtonFromList> createState() => _dropDownButtonFromListState(chosenStringList: stringList);
+  State<dropDownButtonFromList> createState() => _dropDownButtonFromListState(chosenStringList: stringList, defaultValue: value);
 }
 
 class _dropDownButtonFromListState extends State<dropDownButtonFromList> {
   List<String> chosenStringList;
   String? defaultValue;
 
-  _dropDownButtonFromListState({required this.chosenStringList});
+  _dropDownButtonFromListState({required this.chosenStringList, this.defaultValue});
 
   @override
   Widget build(BuildContext context) {
