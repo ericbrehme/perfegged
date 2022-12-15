@@ -1,6 +1,5 @@
-import 'dart:developer';
 import 'dart:math' as math;
-
+import 'package:perfegged/dataclasses/appstate.dart';
 import 'egg_sizes.dart';
 
 class Preset {
@@ -15,8 +14,9 @@ class Preset {
   int minutes = 0;
   int seconds = 0;
 
-  Preset({required this.id, required int eggWeight, required int envTemp, required int yolkTemp, int pressure = 1013, int elevation = 0}) {
+  Preset({required int eggWeight, required int envTemp, required int yolkTemp, int pressure = 1013, int elevation = 0}) {
     // calculate cooking time from weight (most exact)
+    this.id = AppState().getNewPresetID;
     this.eggWeight = eggWeight;
     this.envTemp = envTemp;
     this.yolkTemp = yolkTemp;
@@ -35,7 +35,7 @@ class Preset {
   }
 
   Preset.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = AppState().getNewPresetID;
     eggWeight = json['eggWeight'];
     envTemp = json['envTemp'];
     yolkTemp = json['yolkTemp'];

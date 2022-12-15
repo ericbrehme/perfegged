@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:perfegged/dataclasses/appstate.dart';
 import 'functional_elements/appbar.dart';
 import 'dataclasses/preset.dart';
 import 'reusable_functions/jsonparser.dart';
@@ -20,12 +21,12 @@ class Presets extends StatefulWidget {
   } */
 
 class _PresetsState extends State<Presets> {
-  late Future<List<Preset>> _presets;
+  late Future<List<Preset>>? _presets = AppState().getPresets;
 
   @override
   void initState() {
     super.initState();
-    _presets = parsePresetJson('assets/data/presets.json');
+    //_presets = parsePresetJson('assets/data/presets.json');
   }
 
   Widget futurebuilder() {

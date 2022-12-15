@@ -29,4 +29,3 @@ Future<int> parseWeatherHTTP(LocationData locationData) async {
   print("Pressure: ${list['main']['pressure']}");
   return list['main']['pressure'];
 }
-

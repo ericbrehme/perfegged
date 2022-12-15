@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:perfegged/about.dart';
+import 'package:perfegged/dataclasses/appstate.dart';
 import 'package:perfegged/help.dart';
 import 'package:perfegged/homescreen_setup.dart';
 import 'package:perfegged/myLogin.dart';
@@ -23,6 +24,7 @@ void main() async {
     openAppSettings();
   }
   print(statuses[Permission.location]);
+  AppState();
   runApp(MyApp());
 }
 

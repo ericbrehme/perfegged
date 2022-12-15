@@ -1,90 +1,75 @@
 [
     {
-      "id": 1,
       "eggWeight": 37,
       "envTemp": 20,
       "yolkTemp": 63
     },
     {
-      "id": 2,
       "eggWeight": 47,
       "envTemp": 20,
       "yolkTemp": 65
     },
     {
-      "id": 3,
       "eggWeight": 58,
       "envTemp": 20,
       "yolkTemp": 69
     },
     {
-      "id": 4,
       "eggWeight": 68,
       "envTemp": 20,
       "yolkTemp": 75
     },
     {
-      "id": 5,
       "eggWeight": 78,
       "envTemp": 20,
       "yolkTemp": 85
     },
     {
-      "id": 6,
       "eggWeight": 121,
       "envTemp": 20,
       "yolkTemp": 92
     },
     {
-      "id": 7,
       "eggWeight": 120,
       "envTemp": 20,
       "yolkTemp": 75
     },
     {
-      "id": 8,
       "eggWeight": 50,
       "envTemp": 8,
       "yolkTemp": 72
     },
     {
-      "id": 9,
       "eggWeight": 62,
       "envTemp": 9,
       "yolkTemp": 70
     },
     {
-      "id": 10,
       "eggWeight": 80,
       "envTemp": 10,
       "yolkTemp": 88
     },
     {
-      "id": 11,
       "eggWeight": 50,
       "envTemp": 11,
       "yolkTemp": 66
     },
     {
-      "id": 12,
       "eggWeight": 76,
       "envTemp": 12,
       "yolkTemp": 79
     },
     {
-      "id": 13,
       "eggWeight": 72,
       "envTemp": 13,
       "yolkTemp": 69
     },
     {
-      "id": 14,
       "eggWeight": 55,
       "envTemp": 14,
       "yolkTemp": 95
     },
     {
-      "id": 15,
       "eggWeight": 130,
       "envTemp": 15,
       "yolkTemp": 75

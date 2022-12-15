@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:perfegged/homescreen_cook.dart';
+import 'package:perfegged/presets.dart';
 import 'package:perfegged/reusable_functions/jsonparser.dart';
 import 'navigation.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
@@ -167,7 +168,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             child: Text('Start Timer', style: Theme.of(context).textTheme.button),
             style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
             onPressed: () {
-              Preset preset = Preset(id: 100, eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue.toInt());
+              Preset preset = Preset(eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue.toInt());
 
               Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomescreenCook(preset: preset)));
             },

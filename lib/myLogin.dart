@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:perfegged/dataclasses/appstate.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
@@ -15,6 +17,7 @@ class _MyLoginState extends State<MyLogin> {
 
   final _emailInput = TextEditingController(text: 'example@mail.com');
   final _passInput = TextEditingController(text: 'password');
+  final db = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -22,6 +25,16 @@ class _MyLoginState extends State<MyLogin> {
 
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       setState(() => this.user = user);
+      AppState().setUser = user;
+      AppState().setFireStoreInstance = db;
+
+      if (user != null) {
+        final dbuser = <String, dynamic>{
+          "uid": user.uid,
+        };
+        //db.collection('users').add(dbuser).then((DocumentReference doc) => print('DocumentSnapshot added with ID: ${doc.id}'));
+        db.collection('users').doc(user.uid).set(dbuser);
+      }
     });
   }
 
@@ -54,7 +67,7 @@ class _MyLoginState extends State<MyLogin> {
     else {
       User user = this.user!;
       if (user.isAnonymous) {
-        return Text('Anonymous sign in: ${user.uid}.');
+        return Text('Anonymous sign in: ${AppState().getUser!.uid}.');
       }
       return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         if (user.photoURL != null) Image.network(user.photoURL!, width: 50),
