@@ -9,6 +9,7 @@ import 'package:perfegged/presets.dart';
 import 'package:perfegged/permissions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ void main() async {
     openAppSettings();
   }
   print(statuses[Permission.location]);
-  AppState();
+  await AppState();
   runApp(MyApp());
 }
 
@@ -34,27 +35,29 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/homescreen_setup',
-      routes: {
-        '/': (context) => const HomescreenSetup(),
-        '/homescreen_setup': (context) => const HomescreenSetup(),
-        //'/homescreen_cook': (context) => const HomescreenCook(),
-        '/about': (context) => const About(),
-        '/presets': (context) => const Presets(),
-        '/navigation': (context) => const Navigation(),
-        '/help': (context) => const Help(),
-        '/login': (context) => const MyLogin(),
-        '/permissions': (context) => const Permissions()
-      },
-      title: 'Perfegged',
-      theme: ThemeData(
-        //primarySwatch: Colors.grey,
-        colorScheme: const ColorScheme.dark(
-          primary: Color.fromARGB(255, 40, 121, 123),
-        ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-    );
+    return ListenableProvider<AppState>(
+        create: (context) => AppState(),
+        child: MaterialApp(
+          initialRoute: '/homescreen_setup',
+          routes: {
+            '/': (context) => const HomescreenSetup(),
+            '/homescreen_setup': (context) => const HomescreenSetup(),
+            //'/homescreen_cook': (context) => const HomescreenCook(),
+            '/about': (context) => const About(),
+            '/presets': (context) => const Presets(),
+            '/navigation': (context) => const Navigation(),
+            '/help': (context) => const Help(),
+            '/login': (context) => const MyLogin(),
+            '/permissions': (context) => const Permissions()
+          },
+          title: 'Perfegged',
+          theme: ThemeData(
+            //primarySwatch: Colors.grey,
+            colorScheme: const ColorScheme.dark(
+              primary: Color.fromARGB(255, 40, 121, 123),
+            ),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+        ));
   }
 }

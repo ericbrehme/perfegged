@@ -25,12 +25,12 @@
       "yolkTemp": 85
     },
     {
-      "eggWeight": 121,
+      "eggWeight": 95,
       "envTemp": 20,
       "yolkTemp": 92
     },
     {
-      "eggWeight": 120,
+      "eggWeight": 90,
       "envTemp": 20,
       "yolkTemp": 75
     },
@@ -70,7 +70,7 @@
       "yolkTemp": 95
     },
     {
-      "eggWeight": 130,
+      "eggWeight": 80,
       "envTemp": 15,
       "yolkTemp": 75
     }

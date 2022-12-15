@@ -45,7 +45,8 @@ class _MyLoginState extends State<MyLogin> {
       body: SingleChildScrollView(
           child: Column(
         children: [
-          SignInButtonBuilder(text: 'Sign in anonymously', icon: Icons.account_circle, onPressed: () => loginAnonymously(), backgroundColor: Colors.blueGrey),
+          SignInButtonBuilder(
+              text: 'Sign in anonymously', icon: Icons.account_circle, onPressed: () async => loginAnonymously(), backgroundColor: Colors.blueGrey),
           SignInButton(Buttons.Email, onPressed: () => loginWithEmail(_emailInput.text, _passInput.text)),
           SizedBox(height: 16),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -67,7 +68,7 @@ class _MyLoginState extends State<MyLogin> {
     else {
       User user = this.user!;
       if (user.isAnonymous) {
-        return Text('Anonymous sign in: ${AppState().getUser!.uid}.');
+        return Text('Anonymous sign in: ${user.uid}.');
       }
       return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         if (user.photoURL != null) Image.network(user.photoURL!, width: 50),

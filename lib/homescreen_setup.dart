@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:perfegged/dataclasses/appstate.dart';
 import 'package:perfegged/homescreen_cook.dart';
 import 'package:perfegged/presets.dart';
 import 'package:perfegged/reusable_functions/jsonparser.dart';
+import 'package:provider/provider.dart';
 import 'navigation.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -19,19 +21,22 @@ class HomescreenSetup extends StatefulWidget {
 }
 
 class _HomescreenSetupState extends State<HomescreenSetup> {
-  int _weightValue = 10;
+/*
+  int _weightValue = 0;
   int _temperatureValue = 8;
-  num _pressureValue = 1015;
   int _yolkTemp = 70;
+*/
+  String _yolkConsistency = "soft liquid";
   int _maxWaterTemp = 100;
   int _waterTemp = 100;
-  String _yolkConsistency = "soft liquid";
+  num _pressureValue = 1015;
   var _locationData;
   String locText = "Loc: unknown";
   List<String> sizeList = [];
 
   @override
   Widget build(BuildContext context) {
+    AppState appState = context.watch<AppState>();
     return Scaffold(
         appBar: MyAppBar(title: 'Perfegged'),
         drawer: const Navigation(),
@@ -49,13 +54,14 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             itemCount: 10,
             itemWidth: 50,
             axis: Axis.horizontal,
-            value: _weightValue,
+            value: appState.getCurrPreset!.eggWeight,
             minValue: 10,
             maxValue: 100,
             step: 1,
             haptics: true,
-            onChanged: (value) => setState(() => _weightValue = value),
+            onChanged: (value) => setState(() => appState.getCurrPreset!.eggWeight = value),
           ),
+          Text(appState.getCurrPreset!.calcEggSize()),
           Divider(),
           SizedBox(height: 16),
           Text('Egg Temperature', style: Theme.of(context).textTheme.headline6),
@@ -63,12 +69,12 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             itemCount: 10,
             itemWidth: 50,
             axis: Axis.horizontal,
-            value: _temperatureValue,
+            value: appState.getCurrPreset!.envTemp,
             minValue: 1,
             maxValue: 35,
             step: 1,
             haptics: true,
-            onChanged: (value) => setState(() => _temperatureValue = value),
+            onChanged: (value) => setState(() => appState.getCurrPreset!.envTemp = value),
           ),
           Divider(),
           SizedBox(height: 16),
@@ -86,8 +92,8 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             onChanged: (value) => setState(() {
               _pressureValue = value;
               _waterTemp = calculateWaterTemp(_pressureValue).toInt();
-              if (_yolkTemp > _waterTemp) {
-                _yolkTemp = _waterTemp;
+              if (appState.getCurrPreset!.yolkTemp > _waterTemp) {
+                appState.getCurrPreset!.yolkTemp = _waterTemp;
               }
               if (_waterTemp <= 100) {
                 _maxWaterTemp = _waterTemp;
@@ -125,14 +131,14 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             itemCount: 10,
             itemWidth: 50,
             axis: Axis.horizontal,
-            value: _yolkTemp,
+            value: appState.getCurrPreset!.yolkTemp,
             minValue: 60,
             maxValue: _maxWaterTemp,
             step: 1,
             haptics: true,
             onChanged: (value) => setState(() {
-              _yolkTemp = value;
-              _yolkConsistency = calcYolkConsistency(_yolkTemp);
+              appState.getCurrPreset!.yolkTemp = value;
+              _yolkConsistency = calcYolkConsistency(value);
             }),
           ),
           Text(_yolkConsistency, style: Theme.of(context).textTheme.bodyText1),
@@ -146,7 +152,8 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: RadialGradient(
-                            colors: [Color.fromARGB(255, 164, 164, 164), Color.fromARGB(255, 255, 255, 255)], radius: 1 - (_yolkTemp - 35) * 0.015))),
+                            colors: [Color.fromARGB(255, 164, 164, 164), Color.fromARGB(255, 255, 255, 255)],
+                            radius: 1 - (appState.getCurrPreset!.yolkTemp - 35) * 0.015))),
                 Center(
                   child: FractionallySizedBox(
                     heightFactor: 0.65,
@@ -156,7 +163,8 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: RadialGradient(
-                                colors: [Color.fromARGB(255, 255, 226, 184), Color.fromARGB(255, 255, 157, 9)], radius: 1 - (_yolkTemp - 50) * 0.02))),
+                                colors: [Color.fromARGB(255, 255, 226, 184), Color.fromARGB(255, 255, 157, 9)],
+                                radius: 1 - (appState.getCurrPreset!.yolkTemp - 50) * 0.02))),
                   ),
                 ),
               ],
@@ -168,9 +176,9 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             child: Text('Start Timer', style: Theme.of(context).textTheme.button),
             style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
             onPressed: () {
-              Preset preset = Preset(eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue.toInt());
+              //Preset preset = Preset(eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue.toInt());
 
-              Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomescreenCook(preset: preset)));
+              Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomescreenCook(preset: appState.getCurrPreset!)));
             },
           ),
           SizedBox(height: 24),

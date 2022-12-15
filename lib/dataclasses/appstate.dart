@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:perfegged/dataclasses/preset.dart';
 import 'package:perfegged/functional_elements/countdown_progress_indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:perfegged/reusable_functions/jsonparser.dart';
 
-class AppState {
+class AppState extends ChangeNotifier {
   //id counter for presets
   static int presetID = 0;
   int get getNewPresetID {
@@ -13,13 +14,15 @@ class AppState {
   }
 
   //holds the current Preset object to work with
-  static Preset? _currPreset;
-  Preset? get getCurrPreset => _currPreset;
-  set currPreset(Preset? preset) => _currPreset = preset;
+  static Preset? currPreset;
+  Preset? get getCurrPreset => currPreset;
+  setCurrPreset(Preset? preset) {
+    currPreset = preset;
+    notifyListeners();
+  }
 
   static Future<List<Preset>>? _presets;
   Future<List<Preset>>? get getPresets => _presets;
-
   List<Preset>? list;
 
   //holds the current User
@@ -46,7 +49,7 @@ class AppState {
 
   void initPreset() async {
     list ??= await _presets;
-    _currPreset ??= list!.last;
+    currPreset ??= list!.last;
     //print(_currPreset.toString());
   }
 }

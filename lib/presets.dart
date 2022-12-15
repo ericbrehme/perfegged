@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:perfegged/dataclasses/appstate.dart';
+import 'package:provider/provider.dart';
 import 'functional_elements/appbar.dart';
 import 'dataclasses/preset.dart';
-import 'reusable_functions/jsonparser.dart';
 
 class Presets extends StatefulWidget {
   const Presets({Key? key}) : super(key: key);
@@ -74,6 +74,11 @@ class _PresetsState extends State<Presets> {
             ),
             subtitle: Text('${calcYolkConsistency(presets[index].yolkTemp)} (${presets[index].yolkTemp.toString()}°C)'),
             trailing: Text('${presets[index].minutes.toString()}:${presets[index].seconds.toString()}'),
+            onTap: () {
+              Provider.of<AppState>(context, listen: false).setCurrPreset(presets[index]);
+              //AppState().setCurrPreset(presets[index]);
+              Navigator.pop(context);
+            },
           ),
         );
       },
