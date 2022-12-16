@@ -41,7 +41,7 @@ class AppState extends ChangeNotifier {
   FirebaseFirestore? get getFireStoreInstance => fireStoreInstance;
   set setFireStoreInstance(FirebaseFirestore? fSInstance) => fireStoreInstance = fSInstance;
 
-  AppState() {
+/*   AppState() {
     //redundant?
     if (user == null) {
       //print(user!.uid);
@@ -51,6 +51,10 @@ class AppState extends ChangeNotifier {
         getDBPresets();
       }
     }
+  } */
+
+  notify() {
+    notifyListeners();
   }
 
   static Future? _initDone;

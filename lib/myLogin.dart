@@ -24,43 +24,37 @@ class _MyLoginState extends State<MyLogin> {
   @override
   void initState() {
     super.initState();
-
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
       AppState.user = user;
       AppState.fireStoreInstance = db;
       setState(() => this.user = user);
       if (user != null) {
-/* 
-        final dbuser = <String, dynamic>{
-          "uid": user.uid,
-        };
-        //db.collection('users').add(dbuser).then((DocumentReference doc) => print('DocumentSnapshot added with ID: ${doc.id}'));
-        db.collection('users').doc(user.uid).set(dbuser).onError((e, _) => print("Error writing document: $e"));
-         */
-        //final snapshot = await db.collection(user.uid).get();
         final ref = db.collection('users').doc(user.uid).collection('presets').withConverter(
               fromFirestore: Preset.fromFirestore,
               toFirestore: (Preset preset, options) => preset.toFirestore(),
             );
         final snapshot = await ref.get();
         if (snapshot.size == 0) {
-          //Presetlist doesn't exist, store default preset-list to firestore
+          AppState.init();
+          await AppState.initializingDone;
           List<Preset>? presets = AppState.list; //list that holds preset-objects
           for (var preset in presets!) {
             await ref.doc(preset.id.toString()).set(preset).onError((e, _) => print("Error writing document: $e"));
           }
         } else {
           AppState.list = [];
-          final queryList = snapshot.docs; // ??? - returns List<QueryDocumentSnapshot<Preset>>
-          // how do i use 'toFirestore' here to fill the list
+          final queryList = snapshot.docs;
           queryList.forEach((element) {
             AppState.list!.add(Preset(eggWeight: element.data().eggWeight, envTemp: element.data().envTemp, yolkTemp: element.data().yolkTemp));
             AppState.list!.last.id = int.parse(element.id);
           });
         }
+      } else {
+        AppState.init();
       }
+      AppState().notify();
     });
-    setState(() {});
+    setState(() {}); // workaround für Username null bei anonymous login
   }
 
   @override
