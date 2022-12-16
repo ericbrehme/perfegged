@@ -26,7 +26,7 @@ void main() async {
   }
   print(statuses[Permission.location]);
   await AppState();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

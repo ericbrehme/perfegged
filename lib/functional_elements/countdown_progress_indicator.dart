@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 /// Create a Circular countdown indicator
@@ -141,13 +139,15 @@ class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient:
-                      RadialGradient(colors: [Color.fromARGB(255, 164, 164, 164), Color.fromARGB(255, 255, 255, 255)], radius: 1 - _radiusAnimation.value))),
+                      // ignore: prefer_const_constructors
+                      RadialGradient(
+                          colors: const [Color.fromARGB(255, 164, 164, 164), Color.fromARGB(255, 255, 255, 255)], radius: 1 - _radiusAnimation.value))),
           Container(
-              margin: EdgeInsets.all(50),
+              margin: const EdgeInsets.all(50),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient:
-                      RadialGradient(colors: [Color.fromARGB(255, 255, 226, 184), Color.fromARGB(255, 255, 157, 9)], radius: 1.5 - _radiusAnimation.value))),
+                  gradient: RadialGradient(
+                      colors: const [Color.fromARGB(255, 255, 226, 184), Color.fromARGB(255, 255, 157, 9)], radius: 1.5 - _radiusAnimation.value))),
           SizedBox(
             height: double.infinity,
             width: double.infinity,

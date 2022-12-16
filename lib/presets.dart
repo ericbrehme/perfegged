@@ -11,17 +11,8 @@ class Presets extends StatefulWidget {
   _PresetsState createState() => _PresetsState();
 }
 
-/* // Fetch content from the json file
-  Future<List<Preset>> readPresets() async {
-    //print("Test");
-    final String response = await rootBundle.loadString('resources/presets.json');
-    final List<dynamic> data =  jsonDecode(response).toList();
-    final List<Preset> presets = data.map((i) => Preset(id: i[0],eggWeight: i[1], envTemp: i[2], yolkTemp: i[3])).toList();
-    return presets;
-  } */
-
 class _PresetsState extends State<Presets> {
-  late Future<List<Preset>>? _presets = AppState().getPresets;
+  //late final Future<List<Preset>>? _presets = AppState().getPresets;
 
   @override
   void initState() {
@@ -29,33 +20,20 @@ class _PresetsState extends State<Presets> {
     //_presets = parsePresetJson('assets/data/presets.json');
   }
 
-  Widget futurebuilder() {
-    return FutureBuilder<List<Preset>>(
-        future: _presets,
-        builder: (context, snapshot) {
-          List<Preset>? presets = snapshot.data;
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return _buildListView(presets!);
-            default:
-              return Center(
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  child: CircularProgressIndicator(),
-                ),
-              );
-          }
-          ;
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(title: 'Presets'),
-      body: futurebuilder(),
+      //body: futurebuilder(),
+      body: listBuilder(),
     );
+  }
+
+  Widget listBuilder() {
+    return Builder(builder: (context) {
+      List<Preset>? presets = AppState.list;
+      return _buildListView(presets!);
+    });
   }
 
   Widget _buildListView(List<Preset> presets) {
@@ -80,30 +58,40 @@ class _PresetsState extends State<Presets> {
               Navigator.pop(context);
             },
             onLongPress: () async {
-            return showDialog(context: context, builder: (BuildContext context){
-              return AlertDialog(title: const Text("Delete Preset"),
-              content: SingleChildScrollView(
-                child: ListBody(
-                  children: const <Widget>[
-              Text('Would you like to remove this Preset?'),
-            ],
-              )
-              ),
-              actions: <Widget>[
-                TextButton(onPressed: (){Navigator.pop(context);}, child: const Text("Cancel")),
-                
-                TextButton(onPressed: () {  AppState().getFireStoreInstance!.collection('users').doc(AppState().getUser?.uid).collection('presets').doc(presets[index].id.toString()).delete(); 
-               
-              presets.remove(presets[index]); 
-               
-                setState(() { // damit der Widget Tree reloaded wird
-                  
-                });
-                Navigator.pop(context);
-                }, child: Text("Delete")) 
-              ],
-              );
-            });
+              return showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Delete Preset"),
+                      content: SingleChildScrollView(
+                          child: ListBody(
+                        children: const <Widget>[
+                          Text('Would you like to remove this Preset?'),
+                        ],
+                      )),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Cancel")),
+                        TextButton(
+                            onPressed: () {
+                              AppState()
+                                  .getFireStoreInstance!
+                                  .collection('users')
+                                  .doc(AppState().getUser?.uid)
+                                  .collection('presets')
+                                  .doc(presets[index].id.toString())
+                                  .delete();
+                              presets.remove(presets[index]); //in Appstate ändern (muss dort Funktion dafür haben)
+                              setState(() {});
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Delete"))
+                      ],
+                    );
+                  });
             },
           ),
         );

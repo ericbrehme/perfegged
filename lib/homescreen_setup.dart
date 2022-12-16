@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:perfegged/dataclasses/appstate.dart';
 import 'package:perfegged/homescreen_cook.dart';
-import 'package:perfegged/presets.dart';
 import 'package:perfegged/reusable_functions/jsonparser.dart';
 import 'package:provider/provider.dart';
 import 'navigation.dart';
@@ -48,7 +45,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
         ),
         body: Center(
             child: Column(children: <Widget>[
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text('Egg weight', style: Theme.of(context).textTheme.headline6),
           NumberPicker(
             itemCount: 10,
@@ -62,8 +59,8 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             onChanged: (value) => setState(() => appState.getCurrPreset!.eggWeight = value),
           ),
           Text(appState.getCurrPreset!.calcEggSize()),
-          Divider(),
-          SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 16),
           Text('Egg Temperature', style: Theme.of(context).textTheme.headline6),
           NumberPicker(
             itemCount: 10,
@@ -76,8 +73,8 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             haptics: true,
             onChanged: (value) => setState(() => appState.getCurrPreset!.envTemp = value),
           ),
-          Divider(),
-          SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 16),
           Text('Air Pressure', style: Theme.of(context).textTheme.headline6),
           NumberPicker(
             //selectedTextStyle: TextStyle(fontSize: 16, color: Color(4284809178)), //irgendwie besser machen!
@@ -115,7 +112,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
                     locText = ("Loc: (${_locationData.latitude}, ${_locationData.longitude}) @${elevation.toInt()}m");
                     _pressureValue = (pressure * (math.pow((1 - (6.5 * elevation) / 288150), 5.255)));
                   });
-                  print(_pressureValue);
+                  //print(_pressureValue);
                 },
               ),
               Padding(
@@ -124,8 +121,8 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
               ),
             ],
           ),
-          Divider(),
-          SizedBox(height: 16),
+          const Divider(),
+          const SizedBox(height: 16),
           Text('Yolk Temp', style: Theme.of(context).textTheme.headline6),
           NumberPicker(
             itemCount: 10,
@@ -142,17 +139,17 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             }),
           ),
           Text(_yolkConsistency, style: Theme.of(context).textTheme.bodyText1),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Expanded(
             child: Stack(
               alignment: AlignmentDirectional.bottomCenter,
               children: [
                 Container(
-                    constraints: BoxConstraints.expand(),
+                    constraints: const BoxConstraints.expand(),
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: RadialGradient(
-                            colors: [Color.fromARGB(255, 164, 164, 164), Color.fromARGB(255, 255, 255, 255)],
+                            colors: const [Color.fromARGB(255, 164, 164, 164), Color.fromARGB(255, 255, 255, 255)],
                             radius: 1 - (appState.getCurrPreset!.yolkTemp - 35) * 0.015))),
                 Center(
                   child: FractionallySizedBox(
@@ -163,7 +160,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: RadialGradient(
-                                colors: [Color.fromARGB(255, 255, 226, 184), Color.fromARGB(255, 255, 157, 9)],
+                                colors: const [Color.fromARGB(255, 255, 226, 184), Color.fromARGB(255, 255, 157, 9)],
                                 radius: 1 - (appState.getCurrPreset!.yolkTemp - 50) * 0.02))),
                   ),
                 ),
@@ -171,17 +168,17 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             ),
           ),
           //Spacer(),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
-            child: Text('Start Timer', style: Theme.of(context).textTheme.button),
             style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
             onPressed: () {
               //Preset preset = Preset(eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue.toInt());
 
-              Navigator.push(context, new MaterialPageRoute(builder: (context) => new HomescreenCook(preset: appState.getCurrPreset!)));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => HomescreenCook(preset: appState.getCurrPreset!)));
             },
+            child: Text('Start Timer', style: Theme.of(context).textTheme.button),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
         ])));
   }
 }

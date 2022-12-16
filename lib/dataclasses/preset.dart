@@ -15,14 +15,9 @@ class Preset {
   int minutes = 0;
   int seconds = 0;
 
-  Preset({required int eggWeight, required int envTemp, required int yolkTemp, int pressure = 1013, int elevation = 0}) {
+  Preset({required this.eggWeight, required this.envTemp, required this.yolkTemp, this.pressure = 1013, this.elevation = 0}) {
     // calculate cooking time from weight (most exact)
-    this.id = AppState().getNewPresetID;
-    this.eggWeight = eggWeight;
-    this.envTemp = envTemp;
-    this.yolkTemp = yolkTemp;
-    this.pressure = pressure;
-    this.elevation = elevation;
+    id = AppState().getNewPresetID;
     waterTemp = calculateWaterTemp().toInt();
     calcTime();
   }
@@ -52,15 +47,15 @@ class Preset {
   }
 
   String calcEggSize() {
-    if (eggWeight < Eggsizes.egg_size_eu_max['XS']!) {
+    if (eggWeight < Eggsizes.eggSizeEuMax['XS']!) {
       return 'XS';
-    } else if (eggWeight < Eggsizes.egg_size_eu_max['S']!) {
+    } else if (eggWeight < Eggsizes.eggSizeEuMax['S']!) {
       return 'S';
-    } else if (eggWeight < Eggsizes.egg_size_eu_max['M']!) {
+    } else if (eggWeight < Eggsizes.eggSizeEuMax['M']!) {
       return 'M';
-    } else if (eggWeight < Eggsizes.egg_size_eu_max['L']!) {
+    } else if (eggWeight < Eggsizes.eggSizeEuMax['L']!) {
       return 'L';
-    } else if (eggWeight < Eggsizes.egg_size_eu_max['XL']!) {
+    } else if (eggWeight < Eggsizes.eggSizeEuMax['XL']!) {
       return 'XL';
     } else {
       return 'XXL';
@@ -92,9 +87,9 @@ class Preset {
 
   Map<String, Object?> toFirestore() {
     return {
-      if (eggWeight != null) "eggWeight": eggWeight,
-      if (yolkTemp != null) "yolkTemp": yolkTemp,
-      if (envTemp != null) "envTemp": envTemp,
+      "eggWeight": eggWeight,
+      "yolkTemp": yolkTemp,
+      "envTemp": envTemp,
     };
   }
 

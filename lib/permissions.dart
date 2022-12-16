@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:io';
 
 class Permissions extends StatefulWidget {
   const Permissions({super.key});
@@ -36,7 +35,7 @@ class _PermissionsState extends State<Permissions> {
 /// Permission widget containing information about the passed [Permission]
 class PermissionWidget extends StatefulWidget {
   /// Constructs a [PermissionWidget] for the supplied [Permission]
-  const PermissionWidget(this._permission);
+  const PermissionWidget(this._permission, {super.key});
 
   final Permission _permission;
 

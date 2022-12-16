@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:perfegged/functional_elements/countdown_progress_indicator.dart';
 import 'package:vibration/vibration.dart';
 import 'navigation.dart';
@@ -39,8 +38,8 @@ class _HomescreenCookState extends State<HomescreenCook> {
             timeFormatter: (seconds) {
               return Duration(seconds: seconds).toString().substring(2).split('.')[0];
             },
-            timeTextStyle: TextStyle(color: Colors.black),
-            labelTextStyle: TextStyle(color: Colors.black),
+            timeTextStyle: const TextStyle(color: Colors.black),
+            labelTextStyle: const TextStyle(color: Colors.black),
             text: 'mm:ss',
             onComplete: () => alarm(),
           ),

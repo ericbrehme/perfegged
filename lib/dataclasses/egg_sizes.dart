@@ -2,9 +2,9 @@ class Eggsizes {
   // source: https://en.wikipedia.org/wiki/Chicken_egg_sizes
 
   // rough average weight of eu standard size eggs in grams (XS, XL, XXL - can be really vague, as ranges are high )
-  static const egg_size_eu = {'XS': 37, 'S': 47, 'M': 58, 'L': 68, 'XL': 78, 'XXL': 120};
+  static const eggSizeEu = {'XS': 37, 'S': 47, 'M': 58, 'L': 68, 'XL': 78, 'XXL': 120};
 
-  static const egg_size_eu_max = {
+  static const eggSizeEuMax = {
     'XS': 40,
     'S': 53,
     'M': 63,

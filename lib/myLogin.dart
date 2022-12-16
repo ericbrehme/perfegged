@@ -36,7 +36,6 @@ class _MyLoginState extends State<MyLogin> {
         };
         //db.collection('users').add(dbuser).then((DocumentReference doc) => print('DocumentSnapshot added with ID: ${doc.id}'));
         db.collection('users').doc(user.uid).set(dbuser).onError((e, _) => print("Error writing document: $e"));
-        ;
         List<Preset>? presets = AppState.list;
         /*
 CollectionReference users = Appstate._firebaseInstance
@@ -55,7 +54,6 @@ CollectionReference users = Appstate._firebaseInstance
               .onError((e, _) => print("Error writing document: $e"));
         }
       }
-      ;
     });
   }
 
@@ -69,31 +67,31 @@ CollectionReference users = Appstate._firebaseInstance
           SignInButtonBuilder(
               text: 'Sign in anonymously', icon: Icons.account_circle, onPressed: () async => loginAnonymously(), backgroundColor: Colors.blueGrey),
           SignInButton(Buttons.Email, onPressed: () => loginWithEmail(_emailInput.text, _passInput.text)),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            SizedBox(width: 150, child: TextField(controller: _emailInput, decoration: InputDecoration(hintText: 'Email'))),
-            SizedBox(width: 150, child: TextField(controller: _passInput, obscureText: true, decoration: InputDecoration(hintText: 'Password'))),
+            SizedBox(width: 150, child: TextField(controller: _emailInput, decoration: const InputDecoration(hintText: 'Email'))),
+            SizedBox(width: 150, child: TextField(controller: _passInput, obscureText: true, decoration: const InputDecoration(hintText: 'Password'))),
           ]),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           SignInButton(Buttons.Google, onPressed: () => loginWithGoogle()),
           Container(child: userInfo()),
-          ElevatedButton(child: Text('Sign out'), style: ElevatedButton.styleFrom(primary: Colors.red), onPressed: user != null ? () => logout() : null)
+          ElevatedButton(style: ElevatedButton.styleFrom(primary: Colors.red), onPressed: user != null ? () => logout() : null, child: const Text('Sign out'))
         ],
       )),
     );
   }
 
   Widget userInfo() {
-    if (user == null)
-      return Text('Not signed in.');
-    else {
+    if (user == null) {
+      return const Text('Not signed in.');
+    } else {
       User user = this.user!;
       if (user.isAnonymous) {
         return Text('Anonymous sign in: ${user.uid}.');
       }
       return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         if (user.photoURL != null) Image.network(user.photoURL!, width: 50),
-        Text('Signed in as ${user.displayName != null ? user.displayName! + ', ' : ''}${user.email}.')
+        Text('Signed in as ${user.displayName != null ? '${user.displayName!}, ' : ''}${user.email}.')
       ]);
     }
   }
