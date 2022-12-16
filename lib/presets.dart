@@ -79,6 +79,32 @@ class _PresetsState extends State<Presets> {
               //AppState().setCurrPreset(presets[index]);
               Navigator.pop(context);
             },
+            onLongPress: () async {
+            return showDialog(context: context, builder: (BuildContext context){
+              return AlertDialog(title: const Text("Delete Preset"),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: const <Widget>[
+              Text('Would you like to remove this Preset?'),
+            ],
+              )
+              ),
+              actions: <Widget>[
+                TextButton(onPressed: (){Navigator.pop(context);}, child: const Text("Cancel")),
+                
+                TextButton(onPressed: () {  AppState().getFireStoreInstance!.collection('users').doc(AppState().getUser?.uid).collection('presets').doc(presets[index].id.toString()).delete(); 
+               
+              presets.remove(presets[index]); 
+               
+                setState(() { // damit der Widget Tree reloaded wird
+                  
+                });
+                Navigator.pop(context);
+                }, child: Text("Delete")) 
+              ],
+              );
+            });
+            },
           ),
         );
       },
