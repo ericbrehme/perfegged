@@ -9,7 +9,7 @@ class AppState extends ChangeNotifier {
   //id counter for presets
   static int presetID = 0;
   int get getNewPresetID {
-    print(presetID);
+    //print(presetID);
     return presetID++;
   }
 
@@ -21,8 +21,6 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  static Future<List<Preset>>? _presets;
-  Future<List<Preset>>? get getPresets => _presets;
   static List<Preset>? list;
   List<Preset>? getList() {
     return list;
@@ -44,30 +42,21 @@ class AppState extends ChangeNotifier {
   set setFireStoreInstance(FirebaseFirestore? fireStoreInstance) => _fireStoreInstance = fireStoreInstance;
 
   AppState() {
-    //initilaze values
-    //print("initializing AppState");
-    if (User == null) {
+    if (_user == null) {
+      initPreset();
     } else {}
-    _presets ??= parsePresetJson('assets/data/presets.json');
-    initPreset();
     if (_fireStoreInstance != null) {
       getDBPresets();
     }
   }
 
   void initPreset() async {
-    list ??= await _presets;
+    list ??= await parsePresetJson('assets/data/presets.json');
     currPreset ??= list!.last;
     //print(_currPreset.toString());
   }
 
   void getDBPresets() async {
-    /*
-    DocumentSnapshot doc = await _fireStoreInstance!.collection('users').doc(_user!.uid).get();
-    Map<String, dynamic>? dict = doc.data() as Map<String, dynamic>?;
-    print(dict);
-    */
-
     await _fireStoreInstance!.collection("users").doc(_user!.uid).get().then((event) {
       print("${event.data()}");
     });
