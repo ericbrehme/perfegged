@@ -6,6 +6,8 @@ import 'package:perfegged/dataclasses/appstate.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'dataclasses/preset.dart';
+
 class MyLogin extends StatefulWidget {
   const MyLogin({Key? key}) : super(key: key);
   @override
@@ -33,8 +35,27 @@ class _MyLoginState extends State<MyLogin> {
           "uid": user.uid,
         };
         //db.collection('users').add(dbuser).then((DocumentReference doc) => print('DocumentSnapshot added with ID: ${doc.id}'));
-        db.collection('users').doc(user.uid).set(dbuser);
+        db.collection('users').doc(user.uid).set(dbuser).onError((e, _) => print("Error writing document: $e"));
+        ;
+        List<Preset>? presets = AppState.list;
+        /*
+CollectionReference users = Appstate._firebaseInstance
+        */
+        for (var preset in presets!) {
+          db
+              .collection('users')
+              .doc(user.uid)
+              .collection('presets')
+              .withConverter(
+                fromFirestore: Preset.fromFirestore,
+                toFirestore: (Preset preset, options) => preset.toFirestore(),
+              )
+              .doc(preset.id.toString())
+              .set(preset)
+              .onError((e, _) => print("Error writing document: $e"));
+        }
       }
+      ;
     });
   }
 

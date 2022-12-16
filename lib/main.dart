@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
     return ListenableProvider<AppState>(
         create: (context) => AppState(),
         child: MaterialApp(
-          initialRoute: '/homescreen_setup',
+          initialRoute: '/login',
           routes: {
             '/': (context) => const HomescreenSetup(),
             '/homescreen_setup': (context) => const HomescreenSetup(),

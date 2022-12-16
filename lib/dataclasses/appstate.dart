@@ -23,7 +23,10 @@ class AppState extends ChangeNotifier {
 
   static Future<List<Preset>>? _presets;
   Future<List<Preset>>? get getPresets => _presets;
-  List<Preset>? list;
+  static List<Preset>? list;
+  List<Preset>? getList() {
+    return list;
+  }
 
   //holds the current User
   static User? _user;
@@ -43,13 +46,30 @@ class AppState extends ChangeNotifier {
   AppState() {
     //initilaze values
     //print("initializing AppState");
+    if (User == null) {
+    } else {}
     _presets ??= parsePresetJson('assets/data/presets.json');
     initPreset();
+    if (_fireStoreInstance != null) {
+      getDBPresets();
+    }
   }
 
   void initPreset() async {
     list ??= await _presets;
     currPreset ??= list!.last;
     //print(_currPreset.toString());
+  }
+
+  void getDBPresets() async {
+    /*
+    DocumentSnapshot doc = await _fireStoreInstance!.collection('users').doc(_user!.uid).get();
+    Map<String, dynamic>? dict = doc.data() as Map<String, dynamic>?;
+    print(dict);
+    */
+
+    await _fireStoreInstance!.collection("users").doc(_user!.uid).get().then((event) {
+      print("${event.data()}");
+    });
   }
 }

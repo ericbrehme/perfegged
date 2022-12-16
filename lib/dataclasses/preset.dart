@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:perfegged/dataclasses/appstate.dart';
 import 'egg_sizes.dart';
 
@@ -87,6 +88,22 @@ class Preset {
     double temp = 1730.63 / (8.07131 - (math.log(pressure / 1.33322387415) / math.ln10)) - 233.426;
     print("temperature  ${temp.toString()}");
     return temp;
+  }
+
+  Map<String, Object?> toFirestore() {
+    return {
+      if (eggWeight != null) "eggWeight": eggWeight,
+      if (yolkTemp != null) "yolkTemp": yolkTemp,
+      if (envTemp != null) "envTemp": envTemp,
+    };
+  }
+
+  factory Preset.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return Preset(eggWeight: data?['eggWeight'], envTemp: data?['envTemp'], yolkTemp: data?['yolkTemp']);
   }
 }
 
