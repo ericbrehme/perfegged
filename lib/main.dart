@@ -25,7 +25,8 @@ void main() async {
     openAppSettings();
   }
   print(statuses[Permission.location]);
-  await AppState();
+  AppState.init();
+  await AppState.initializingDone;
   runApp(const MyApp());
 }
 

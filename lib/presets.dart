@@ -77,8 +77,7 @@ class _PresetsState extends State<Presets> {
                             child: const Text("Cancel")),
                         TextButton(
                             onPressed: () {
-                              AppState()
-                                  .getFireStoreInstance!
+                              AppState.fireStoreInstance!
                                   .collection('users')
                                   .doc(AppState().getUser?.uid)
                                   .collection('presets')

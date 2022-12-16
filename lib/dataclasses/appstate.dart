@@ -27,37 +27,46 @@ class AppState extends ChangeNotifier {
   }
 
   //holds the current User
-  static User? _user;
-  User? get getUser => _user;
-  set setUser(User? user) => _user = user;
+  static User? user;
+  User? get getUser => user;
+  set setUser(User? user) => user = user;
 
   //holds currently active CountDownController object
-  static CountDownController? _countDownController;
-  CountDownController? get getcountDownController => _countDownController;
-  set setCountDownController(CountDownController? countDownController) => _countDownController = countDownController;
+  static CountDownController? countDownController;
+  CountDownController? get getcountDownController => countDownController;
+  set setCountDownController(CountDownController? cdController) => countDownController = cdController;
 
   //FirebaseFirestore
-  static FirebaseFirestore? _fireStoreInstance;
-  FirebaseFirestore? get getFireStoreInstance => _fireStoreInstance;
-  set setFireStoreInstance(FirebaseFirestore? fireStoreInstance) => _fireStoreInstance = fireStoreInstance;
+  static FirebaseFirestore? fireStoreInstance;
+  FirebaseFirestore? get getFireStoreInstance => fireStoreInstance;
+  set setFireStoreInstance(FirebaseFirestore? fSInstance) => fireStoreInstance = fSInstance;
 
   AppState() {
-    if (_user == null) {
-      initPreset();
-    } else {}
-    if (_fireStoreInstance != null) {
-      getDBPresets();
+    //redundant?
+    if (user == null) {
+      //print(user!.uid);
+      //initPreset();
+    } else {
+      if (fireStoreInstance != null) {
+        getDBPresets();
+      }
     }
   }
 
-  void initPreset() async {
+  static Future? _initDone;
+  static Future? get initializingDone => _initDone;
+
+  static init() {
+    _initDone = _initPreset();
+  }
+
+  static Future _initPreset() async {
     list ??= await parsePresetJson('assets/data/presets.json');
     currPreset ??= list!.last;
-    //print(_currPreset.toString());
   }
 
   void getDBPresets() async {
-    await _fireStoreInstance!.collection("users").doc(_user!.uid).get().then((event) {
+    await fireStoreInstance!.collection("users").doc(user!.uid).get().then((event) {
       print("${event.data()}");
     });
   }
