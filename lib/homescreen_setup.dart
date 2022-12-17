@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:perfegged/dataclasses/appstate.dart';
 import 'package:perfegged/homescreen_cook.dart';
 import 'package:perfegged/reusable_functions/jsonparser.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'navigation.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
@@ -37,12 +38,6 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
     return Scaffold(
         appBar: MyAppBar(title: 'Perfegged'),
         drawer: const Navigation(),
-        floatingActionButton: IconButton(
-          onPressed: () => Navigator.pushNamed(context, '/presets'),
-          icon: const Icon(Icons.content_paste_search),
-          tooltip: 'Presets',
-          iconSize: 50,
-        ),
         body: Center(
             child: Column(children: <Widget>[
           const SizedBox(height: 16),
@@ -169,27 +164,76 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
           ),
           //Spacer(),
           const SizedBox(height: 16),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50)),
-            onPressed: () {
-              //Preset preset = Preset(eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue.toInt());
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  //Preset preset = Preset(eggWeight: _weightValue, envTemp: _temperatureValue, yolkTemp: _yolkTemp, pressure: _pressureValue.toInt());
 
-              Navigator.push(context, MaterialPageRoute(builder: (context) => HomescreenCook(preset: appState.getCurrPreset!)));
-            },
-            child: Text('Start Timer', style: Theme.of(context).textTheme.button),
+                  Navigator.pushNamed(context, '/homescreen_cook');
+                },
+                child: Text('Start Timer', style: Theme.of(context).textTheme.button),
+              ),
+              ElevatedButton(
+                child: Text("Presets", style: Theme.of(context).textTheme.button),
+                onPressed: () => Navigator.pushNamed(context, '/presets'),
+              ),
+              ElevatedButton(
+                  child: Text("save Preset", style: Theme.of(context).textTheme.button),
+                  onPressed: () {
+                    final preset = AppState.currPreset;
+                    AppState.list!.add(preset!);
+                    AppState.list!.last.id = appState.getNewPresetID;
+                    AppState.fireStoreInstance!
+                        .collection('users')
+                        .doc(appState.getUser!.uid)
+                        .collection('presets')
+                        .withConverter(
+                          fromFirestore: Preset.fromFirestore,
+                          toFirestore: (Preset preset, options) => preset.toFirestore(),
+                        )
+                        .doc(preset.id.toString())
+                        .set(preset);
+                  }),
+            ],
           ),
           const SizedBox(height: 24),
         ])));
   }
 }
 
+Widget savePreset() {
+  if (AppState.user != Null) {
+    return ElevatedButton(
+        child: Text("save Preset", style: Theme.of(context).textTheme.button),
+        onPressed: () {
+          final preset = AppState.currPreset;
+          AppState.list!.add(preset!);
+          AppState.list!.last.id = appState.getNewPresetID;
+          AppState.fireStoreInstance!
+              .collection('users')
+              .doc(appState.getUser!.uid)
+              .collection('presets')
+              .withConverter(
+                fromFirestore: Preset.fromFirestore,
+                toFirestore: (Preset preset, options) => preset.toFirestore(),
+              )
+              .doc(preset.id.toString())
+              .set(preset);
+        });
+  } else {
+    return SizedBox();
+  }
+}
+
 /* TODO: Handle unavailable Permissions?! */
 Future<LocationData> _initLocationService() async {
   var location = Location();
-
+/* 
   if (!await location.serviceEnabled()) {
     if (!await location.requestService()) {
-      //return;
+
     }
   }
 
@@ -200,7 +244,7 @@ Future<LocationData> _initLocationService() async {
       //return;
     }
   }
-
+*/
   var loc = await location.getLocation();
 
   return loc;
