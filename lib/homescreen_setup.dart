@@ -41,7 +41,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
         body: Center(
             child: Column(children: <Widget>[
           const SizedBox(height: 16),
-          Text('Egg weight', style: Theme.of(context).textTheme.headline6),
+          Text('Egg Weight', style: Theme.of(context).textTheme.headline6),
           NumberPicker(
             itemCount: 10,
             itemWidth: 50,

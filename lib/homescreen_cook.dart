@@ -21,25 +21,36 @@ class _HomescreenCookState extends State<HomescreenCook> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(title: 'Perfegged'),
-      body: Center(
-        child: SizedBox(
-          height: 300,
-          width: 300,
-          child: CountDownProgressIndicator(
-            controller: _controller,
-            valueColor: Colors.red,
-            backgroundColor: Colors.blue,
-            initialPosition: 0,
-            duration: ((AppState.currPreset!.calculateTimeWeight()) * (60)).toInt(),
-            timeFormatter: (seconds) {
-              return Duration(seconds: seconds).toString().substring(2).split('.')[0];
-            },
-            timeTextStyle: const TextStyle(color: Colors.black),
-            labelTextStyle: const TextStyle(color: Colors.black),
-            text: 'mm:ss',
-            onComplete: () => alarm(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: SizedBox(
+              height: 300,
+              width: 300,
+              child: CountDownProgressIndicator(
+                controller: _controller,
+                valueColor: Colors.red,
+                backgroundColor: Colors.blue,
+                initialPosition: 0,
+                duration: ((AppState.currPreset!.calculateTimeWeight()) * (60)).toInt(),
+                timeFormatter: (seconds) {
+                  return Duration(seconds: seconds).toString().substring(2).split('.')[0];
+                },
+                timeTextStyle: const TextStyle(color: Colors.black),
+                labelTextStyle: const TextStyle(color: Colors.black),
+                text: 'mm:ss',
+                onComplete: () => alarm(),
+              ),
+            ),
           ),
-        ),
+          SizedBox(
+            height: 32,
+          ),
+          Center(
+            child: ElevatedButton(onPressed: () => Navigator.pop(context), child: Text("Abort Timer", style: Theme.of(context).textTheme.button)),
+          ),
+        ],
       ),
     );
   }
