@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:perfegged/dataclasses/appstate.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 import 'dataclasses/preset.dart';
 
@@ -25,7 +26,7 @@ class _MyLoginState extends State<MyLogin> {
   void initState() {
     super.initState();
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
-      AppState.user = user;
+      Provider.of<AppState>(context, listen: false).setUser = user;
       AppState.fireStoreInstance = db;
       setState(() => this.user = user);
       if (user != null) {
@@ -52,9 +53,8 @@ class _MyLoginState extends State<MyLogin> {
       } else {
         AppState.init();
       }
-      AppState().notify();
     });
-    setState(() {}); // workaround für Username null bei anonymous login
+    //setState(() {}); // workaround für Username null bei anonymous login
   }
 
   @override

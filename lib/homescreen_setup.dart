@@ -179,51 +179,66 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
                 child: Text("Presets", style: Theme.of(context).textTheme.button),
                 onPressed: () => Navigator.pushNamed(context, '/presets'),
               ),
-              ElevatedButton(
-                  child: Text("save Preset", style: Theme.of(context).textTheme.button),
-                  onPressed: () {
-                    final preset = AppState.currPreset;
-                    AppState.list!.add(preset!);
-                    AppState.list!.last.id = appState.getNewPresetID;
-                    AppState.fireStoreInstance!
-                        .collection('users')
-                        .doc(appState.getUser!.uid)
-                        .collection('presets')
-                        .withConverter(
-                          fromFirestore: Preset.fromFirestore,
-                          toFirestore: (Preset preset, options) => preset.toFirestore(),
-                        )
-                        .doc(preset.id.toString())
-                        .set(preset);
-                  }),
+              savePreset(),
             ],
           ),
           const SizedBox(height: 24),
         ])));
   }
-}
 
-Widget savePreset() {
-  if (AppState.user != Null) {
-    return ElevatedButton(
-        child: Text("save Preset", style: Theme.of(context).textTheme.button),
-        onPressed: () {
-          final preset = AppState.currPreset;
-          AppState.list!.add(preset!);
-          AppState.list!.last.id = appState.getNewPresetID;
-          AppState.fireStoreInstance!
-              .collection('users')
-              .doc(appState.getUser!.uid)
-              .collection('presets')
-              .withConverter(
-                fromFirestore: Preset.fromFirestore,
-                toFirestore: (Preset preset, options) => preset.toFirestore(),
-              )
-              .doc(preset.id.toString())
-              .set(preset);
-        });
-  } else {
-    return SizedBox();
+  Widget savePreset() {
+    //TODO!!! Fix login not recognized
+    if (AppState.user != null) {
+      return ElevatedButton(
+          child: Text("Save Preset", style: Theme.of(context).textTheme.button),
+          onPressed: () {
+            final preset = AppState.currPreset;
+            AppState.list!.add(preset!);
+            AppState.list!.last.id = AppState().getNewPresetID;
+            AppState.fireStoreInstance!
+                .collection('users')
+                .doc(AppState().getUser!.uid)
+                .collection('presets')
+                .withConverter(
+                  fromFirestore: Preset.fromFirestore,
+                  toFirestore: (Preset preset, options) => preset.toFirestore(),
+                )
+                .doc(preset.id.toString())
+                .set(preset);
+          });
+    } else {
+      return ElevatedButton(
+          child: Text("Save Preset", style: Theme.of(context).textTheme.button),
+          onPressed: () async {
+            return showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Save Preset"),
+                    content: SingleChildScrollView(
+                      child: ListBody(
+                        children: const <Widget>[
+                          Text("Saving is only available with login."),
+                        ],
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("OK")),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pushNamed(context, '/login');
+                          },
+                          child: const Text("login")),
+                    ],
+                  );
+                });
+          });
+    }
   }
 }
 

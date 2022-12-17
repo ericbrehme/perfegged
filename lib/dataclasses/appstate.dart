@@ -17,7 +17,7 @@ class AppState extends ChangeNotifier {
   static Preset? currPreset;
   Preset? get getCurrPreset => currPreset;
   setCurrPreset(Preset? preset) {
-    currPreset = preset;
+    currPreset = Preset(eggWeight: preset!.eggWeight, envTemp: preset.envTemp, yolkTemp: preset.yolkTemp);
     notifyListeners();
   }
 
@@ -29,7 +29,10 @@ class AppState extends ChangeNotifier {
   //holds the current User
   static User? user;
   User? get getUser => user;
-  set setUser(User? user) => user = user;
+  set setUser(User? currUser) {
+    user = currUser;
+    notifyListeners();
+  }
 
   //holds currently active CountDownController object
   static CountDownController? countDownController;

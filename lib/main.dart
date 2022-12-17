@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:perfegged/about.dart';
 import 'package:perfegged/dataclasses/appstate.dart';
 import 'package:perfegged/help.dart';
+import 'package:perfegged/homescreen_cook.dart';
 import 'package:perfegged/homescreen_setup.dart';
 import 'package:perfegged/myLogin.dart';
 import 'package:perfegged/navigation.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (context) => const HomescreenSetup(),
             '/homescreen_setup': (context) => const HomescreenSetup(),
-            //'/homescreen_cook': (context) => const HomescreenCook(),
+            '/homescreen_cook': (context) => const HomescreenCook(),
             '/about': (context) => const About(),
             '/presets': (context) => const Presets(),
             '/navigation': (context) => const Navigation(),

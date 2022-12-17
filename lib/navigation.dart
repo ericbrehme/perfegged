@@ -38,7 +38,7 @@ class Navigation extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
-              Navigator.popUntil(context, ModalRoute.withName('/homescreen_setup'));
+              Navigator.pop(context);
             },
           ),
           ListTile(

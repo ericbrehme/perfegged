@@ -31,30 +31,30 @@ class _PresetsState extends State<Presets> {
 
   Widget listBuilder() {
     return Builder(builder: (context) {
-      List<Preset>? presets = AppState.list;
-      return _buildListView(presets!);
+      //List<Preset>? presets = AppState.list;
+      return _buildListView();
     });
   }
 
-  Widget _buildListView(List<Preset> presets) {
+  Widget _buildListView() {
     return ListView.builder(
-      itemCount: presets.length,
+      itemCount: AppState.list!.length,
       itemBuilder: (context, index) {
         return Card(
-          key: ValueKey(presets[index].id),
+          key: ValueKey(AppState.list![index].id),
           margin: const EdgeInsets.all(10),
           child: ListTile(
-            leading: Text(presets[index].id.toString()),
+            leading: Text((index + 1).toString()),
             title: Row(
               children: [
-                Text('${presets[index].calcEggSize()} (${presets[index].eggWeight}g)'),
+                Text('${AppState.list![index].calcEggSize()} (${AppState.list![index].eggWeight}g)'),
               ],
             ),
-            subtitle: Text('${calcYolkConsistency(presets[index].yolkTemp)} (${presets[index].yolkTemp.toString()}°C)'),
-            trailing: Text('${presets[index].minutes.toString()}:${presets[index].seconds.toString()}'),
+            subtitle: Text('${calcYolkConsistency(AppState.list![index].yolkTemp)} (${AppState.list![index].yolkTemp.toString()}°C)'),
+            trailing: Text('${AppState.list![index].minutes.toString()}:${AppState.list![index].seconds.toString()}'),
             onTap: () {
-              Provider.of<AppState>(context, listen: false).setCurrPreset(presets[index]);
-              //AppState().setCurrPreset(presets[index]);
+              Provider.of<AppState>(context, listen: false).setCurrPreset(AppState.list![index]);
+              //AppState().setCurrPreset(AppState.list![index]);
               Navigator.pop(context);
             },
             onLongPress: () async {
@@ -81,9 +81,9 @@ class _PresetsState extends State<Presets> {
                                   .collection('users')
                                   .doc(AppState().getUser?.uid)
                                   .collection('presets')
-                                  .doc(presets[index].id.toString())
+                                  .doc(AppState.list![index].id.toString())
                                   .delete();
-                              presets.remove(presets[index]); //in Appstate ändern (muss dort Funktion dafür haben)
+                              AppState.list!.remove(AppState.list![index]); //in Appstate ändern (muss dort Funktion dafür haben)
                               setState(() {});
                               Navigator.pop(context);
                             },
