@@ -40,7 +40,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
         drawer: const Navigation(),
         body: Center(
             child: Column(children: <Widget>[
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Text('Egg Weight', style: Theme.of(context).textTheme.headline6),
           NumberPicker(
             itemCount: 10,
@@ -55,7 +55,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
           ),
           Text(appState.getCurrPreset!.calcEggSize()),
           const Divider(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Text('Egg Temperature', style: Theme.of(context).textTheme.headline6),
           NumberPicker(
             itemCount: 10,
@@ -69,14 +69,14 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             onChanged: (value) => setState(() => appState.getCurrPreset!.envTemp = value),
           ),
           const Divider(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Text('Air Pressure', style: Theme.of(context).textTheme.headline6),
           NumberPicker(
             //selectedTextStyle: TextStyle(fontSize: 16, color: Color(4284809178)), //irgendwie besser machen!
             itemCount: 5,
-            itemWidth: 100,
+            itemWidth: 85,
             axis: Axis.horizontal,
-            value: _pressureValue.toInt(),
+            value: (_pressureValue.toInt()~/10)*10, //rounded to 10^1
             minValue: 300,
             maxValue: 1500,
             step: 10,
@@ -112,12 +112,14 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                child: Text(locText, style: Theme.of(context).textTheme.bodyText1),
+                child: Flexible(
+                  child: Text(locText, style: Theme.of(context).textTheme.bodyText1)
+                ),
               ),
             ],
           ),
           const Divider(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Text('Yolk Temp', style: Theme.of(context).textTheme.headline6),
           NumberPicker(
             itemCount: 10,
@@ -134,7 +136,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             }),
           ),
           Text(_yolkConsistency, style: Theme.of(context).textTheme.bodyText1),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Expanded(
             child: Stack(
               alignment: AlignmentDirectional.bottomCenter,
@@ -163,7 +165,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
             ),
           ),
           //Spacer(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -182,12 +184,11 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
               savePreset(),
             ],
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 1),
         ])));
   }
 
   Widget savePreset() {
-    //TODO!!! Fix login not recognized
     if (AppState.user != null) {
       return ElevatedButton(
           child: Text("Save Preset", style: Theme.of(context).textTheme.button),

@@ -19,12 +19,13 @@ class Help extends StatelessWidget {
                 "How To Use",
                 style: Theme.of(context).textTheme.headline5)
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.fromLTRB(8, 0, 8, 16),
               child: Text(
                 "The app requires certain parameters to calculate the exact cooking time for your desired egg consistency. "
                 "These values can be adjusted by using the sliders on the homescreen and can be saved for later use if you are logged in.",
                 textAlign: TextAlign.justify,
+                style: Theme.of(context).textTheme.bodyText1
               ),
             ),
             instructionWidget(
@@ -71,11 +72,12 @@ class Help extends StatelessWidget {
                 "When the water is at boiling temperature, quickly insert the eggs with a spoon and press the 'Start Timer'-button. "
                 "As soon as the alarm is triggered, take the pot off the stove and immediatly cool the eggs down with cold water, so the cooking process is stopped."
             ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(8, 16, 8, 0),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 16, 8, 0),
               child: Text(
                 "Enjoy your perfeggedly boiled eggs! ;)",
                 textAlign: TextAlign.justify,
+                style: Theme.of(context).textTheme.bodyText1
               ),
             ),
             SizedBox(
@@ -105,7 +107,7 @@ class Help extends StatelessWidget {
                 Text(title, style: Theme.of(context).textTheme.headline6),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
-                  child: Text(content, textAlign: TextAlign.justify),
+                  child: Text(content, style: Theme.of(context).textTheme.bodyText1 ,textAlign: TextAlign.justify),
                 ),
               ],
             ),
