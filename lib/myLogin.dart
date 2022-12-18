@@ -65,17 +65,48 @@ class _MyLoginState extends State<MyLogin> {
           child: Column(
         children: [
           SignInButtonBuilder(
-              text: 'Sign in anonymously', icon: Icons.account_circle, onPressed: () async => loginAnonymously(), backgroundColor: Colors.blueGrey),
-          SignInButton(Buttons.Email, onPressed: () => loginWithEmail(_emailInput.text, _passInput.text)),
+            text: 'Sign in anonymously',
+            icon: Icons.account_circle,
+            onPressed: () async => loginAnonymously(),
+            backgroundColor: Colors.blueGrey
+          ),
+/* 
+          SignInButton(
+            Buttons.Email, 
+            onPressed: () => loginWithEmail(_emailInput.text, _passInput.text)
+          ),
           const SizedBox(height: 16),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            SizedBox(width: 150, child: TextField(controller: _emailInput, decoration: const InputDecoration(hintText: 'Email'))),
-            SizedBox(width: 150, child: TextField(controller: _passInput, obscureText: true, decoration: const InputDecoration(hintText: 'Password'))),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+            children: [
+              SizedBox(
+                width: 150,
+                child: TextField(
+                  controller: _emailInput, 
+                  decoration: const InputDecoration(hintText: 'Email')
+                )
+              ),
+              SizedBox(
+                width: 150, 
+                child: TextField(
+                  controller: _passInput, 
+                  obscureText: true, 
+                  decoration: const InputDecoration(hintText: 'Password')
+                )
+              ),
           ]),
+*/
           const SizedBox(height: 16),
-          SignInButton(Buttons.Google, onPressed: () => loginWithGoogle()),
+          SignInButton(
+            Buttons.Google, 
+            onPressed: () => loginWithGoogle()
+          ),
           Container(child: userInfo()),
-          ElevatedButton(style: ElevatedButton.styleFrom(primary: Colors.red), onPressed: user != null ? () => logout() : null, child: const Text('Sign out'))
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(primary: Colors.red), 
+            onPressed: user != null ? () => logout() : null, 
+            child: const Text('Sign out')
+          )
         ],
       )),
     );
@@ -100,6 +131,7 @@ class _MyLoginState extends State<MyLogin> {
     return FirebaseAuth.instance.signInAnonymously();
   }
 
+/* 
   Future<UserCredential?> loginWithEmail(String email, String pass) async {
     try {
       return await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: pass);
@@ -112,6 +144,7 @@ class _MyLoginState extends State<MyLogin> {
       return Future.value(null);
     }
   }
+*/
 
   Future<UserCredential> loginWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();

@@ -55,11 +55,11 @@ class AppState extends ChangeNotifier {
       }
     }
   } */
-
+/* 
   notify() {
     notifyListeners();
   }
-
+ */
   static Future? _initDone;
   static Future? get initializingDone => _initDone;
 

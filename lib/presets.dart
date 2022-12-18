@@ -25,15 +25,8 @@ class _PresetsState extends State<Presets> {
     return Scaffold(
       appBar: MyAppBar(title: 'Presets'),
       //body: futurebuilder(),
-      body: listBuilder(),
+      body: _buildListView(),
     );
-  }
-
-  Widget listBuilder() {
-    return Builder(builder: (context) {
-      //List<Preset>? presets = AppState.list;
-      return _buildListView();
-    });
   }
 
   Widget _buildListView() {
@@ -83,7 +76,7 @@ class _PresetsState extends State<Presets> {
                                   .collection('presets')
                                   .doc(AppState.list![index].id.toString())
                                   .delete();
-                              AppState.list!.remove(AppState.list![index]); //in Appstate ändern (muss dort Funktion dafür haben)
+                              AppState.list!.remove(AppState.list![index]);
                               setState(() {});
                               Navigator.pop(context);
                             },
