@@ -16,7 +16,7 @@ Future<double> parseMapsHTTP(LocationData locationData) async {
   String uri = "https://maps.googleapis.com/maps/api/elevation/json?locations=$lat,$lon&key=AIzaSyB1qqRy07-ORTLM8QbZM3d7a1r2p6GYFCA";
   final response = await http.post(Uri.parse(uri));
   final list = jsonDecode(response.body);
-  print("Elevation: ${list['results'][0]['elevation']}");
+  // print("Elevation: ${list['results'][0]['elevation']}");
   return list['results'][0]['elevation'];
 }
 
@@ -26,6 +26,6 @@ Future<int> parseWeatherHTTP(LocationData locationData) async {
   String uri = "https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=abc40fbb218e98fa5cf8c435ac72bb3e";
   final response = await http.post(Uri.parse(uri));
   final list = jsonDecode(response.body);
-  print("Pressure: ${list['main']['pressure']}");
+  // print("Pressure: ${list['main']['pressure']}");
   return list['main']['pressure'];
 }

@@ -15,9 +15,9 @@ const About({ Key? key }) : super(key: key);
           textDirection: TextDirection.ltr,
           children: [
             aboutEntry(context, title: "Version", value: "1.0"),
-            Divider(),
+            const Divider(),
             aboutEntry(context, title: "Authors", value: "Kevin Knippschild & Eric Brehme"),
-            Divider(),
+            const Divider(),
             Flexible(
               child: Text(
                 "Entwickelt für das Semesterprojekt des Kurses Mobile Systeme im Wintersemester 22/23 an der FH-Kiel",

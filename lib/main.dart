@@ -8,10 +8,11 @@ import 'package:perfegged/homescreen_setup.dart';
 import 'package:perfegged/myLogin.dart';
 import 'package:perfegged/navigation.dart';
 import 'package:perfegged/presets.dart';
-import 'package:perfegged/permissions.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+
+import 'dataclasses/auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +27,11 @@ void main() async {
     // user manually enable it in the system settings.
     openAppSettings();
   }
-  print(statuses[Permission.location]);
+  // print(statuses[Permission.location]);
   AppState.init();
+  Auth.init();
   await AppState.initializingDone;
+  await Auth.initializingDone;
   runApp(const MyApp());
 }
 
@@ -42,10 +45,12 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown
     ]);
+    // print(AppState.user.toString());
     return ListenableProvider<AppState>(
         create: (context) => AppState(),
         child: MaterialApp(
-          initialRoute: '/login',
+          //initialRoute: '/login',
+          initialRoute: AppState.user == null ? '/login': '/homescreen_setup',
           routes: {
             '/': (context) => const HomescreenSetup(),
             '/homescreen_setup': (context) => const HomescreenSetup(),
@@ -55,7 +60,6 @@ class MyApp extends StatelessWidget {
             '/navigation': (context) => const Navigation(),
             '/help': (context) => const Help(),
             '/login': (context) => const MyLogin(),
-            '/permissions': (context) => const Permissions()
           },
           title: 'Perfegged',
           theme: ThemeData(

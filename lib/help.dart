@@ -20,7 +20,7 @@ class Help extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline5)
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(8, 0, 8, 16),
+              padding: const EdgeInsets.fromLTRB(8, 0, 8, 16),
               child: Text(
                 "The app requires certain parameters to calculate the exact cooking time for your desired egg consistency. "
                 "These values can be adjusted by using the sliders on the homescreen and can be saved for later use if you are logged in.",
@@ -80,7 +80,7 @@ class Help extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText1
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 36,
             )
           ],

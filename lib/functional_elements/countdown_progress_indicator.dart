@@ -154,8 +154,6 @@ class _CountDownProgressIndicatorState extends State<CountDownProgressIndicator>
             child: CircularProgressIndicator(
               strokeWidth: widget.strokeWidth,
               backgroundColor: widget.backgroundColor,
-              //backgroundColor: Gradient.radial(Colors.yellow, 30, Colors.orange),
-              //backgroundColor: RadialGradient(colors: [Colors.yellow, Colors.orange]),
               valueColor: AlwaysStoppedAnimation<Color>(widget.valueColor),
               value: _animation.value / widget.duration,
             ),

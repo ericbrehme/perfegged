@@ -43,7 +43,7 @@ class Preset {
     num time = calculateTimeWeight();
     minutes = time.toInt();
     seconds = ((time - minutes) * 60).toInt();
-    print("time(mm:ss)  ${minutes.toString()}:${seconds.toString()}");
+    //print("time(mm:ss)  ${minutes.toString()}:${seconds.toString()}");
   }
 
   String calcEggSize() {
@@ -65,23 +65,21 @@ class Preset {
   double calculateTimeSize() {
     double time;
     time = (0.0152 * math.pow(eggCircumference, 2)) * math.log(2 * (envTemp - waterTemp) / (yolkTemp - waterTemp));
-    print("time  ${time.toString()}");
+    // print("time  ${time.toString()}");
     return time;
   }
 
   double calculateTimeWeight() {
     double time;
     time = (0.451 * math.pow(eggWeight, 2 / 3)) * math.log(0.76 * (envTemp - waterTemp) / (yolkTemp - waterTemp));
-    print("time  ${time.toString()}");
+    // print("time  ${time.toString()}");
     return time;
   }
 
   double calculateWaterTemp() {
     //returns boiling temperature of water in C° for a given pressure
-    //num pressureAtElevation = pressure * (math.pow((1 - 6.5 * elevation) / 288150, 5.255));
-    //print(pressureAtElevation);
     double temp = 1730.63 / (8.07131 - (math.log(pressure / 1.33322387415) / math.ln10)) - 233.426;
-    print("temperature  ${temp.toString()}");
+    // print("temperature  ${temp.toString()}");
     return temp;
   }
 
@@ -120,9 +118,7 @@ String calcYolkConsistency(yolkTemp) {
 
 double calculateWaterTemp(num pressure) {
   //returns boiling temperature of water in C° for a given pressure
-  //num pressureAtElevation = pressure * (math.pow((1 - 6.5 * elevation) / 288150, 5.255));
-  //print(pressureAtElevation);
   double temp = 1730.63 / (8.07131 - (math.log(pressure / 1.33322387415) / math.ln10)) - 233.426;
-  print("temperature  ${temp.toString()}");
+  // print("temperature  ${temp.toString()}");
   return temp;
 }

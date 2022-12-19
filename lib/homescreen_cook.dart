@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:perfegged/dataclasses/appstate.dart';
 import 'package:perfegged/functional_elements/countdown_progress_indicator.dart';
 import 'package:vibration/vibration.dart';
-import 'navigation.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
-import 'package:perfegged/dataclasses/preset.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class HomescreenCook extends StatefulWidget {
@@ -44,11 +42,16 @@ class _HomescreenCookState extends State<HomescreenCook> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 32,
           ),
           Center(
-            child: ElevatedButton(onPressed: () => Navigator.pop(context), child: Text("Abort Timer", style: Theme.of(context).textTheme.button)),
+            child: ElevatedButton(
+              onPressed: () {
+                FlutterRingtonePlayer.stop();
+                Navigator.pop(context);
+                }, 
+              child: Text("Abort Timer", style: Theme.of(context).textTheme.button)),
           ),
         ],
       ),
@@ -56,7 +59,7 @@ class _HomescreenCookState extends State<HomescreenCook> {
   }
 
   void alarm() {
-    FlutterRingtonePlayer.play(fromAsset: "assets/sounds/alarm.wav", looping: false);
-    Vibration.vibrate(duration: 500);
+    FlutterRingtonePlayer.play(fromAsset: "assets/sounds/alarm.wav", looping: false, asAlarm: true);
+    Vibration.vibrate(duration: 1000);
   }
 }

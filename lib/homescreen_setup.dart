@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:perfegged/dataclasses/appstate.dart';
-import 'package:perfegged/homescreen_cook.dart';
 import 'package:perfegged/reusable_functions/jsonparser.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'navigation.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
@@ -103,10 +101,12 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
                   //print("${_locationData.latitude} ${_locationData.longitude}");
                   var elevation = await parseMapsHTTP(_locationData);
                   var pressure = await parseWeatherHTTP(_locationData);
-                  setState(() {
-                    locText = ("Loc: (${_locationData.latitude}, ${_locationData.longitude}) @${elevation.toInt()}m");
-                    _pressureValue = (pressure * (math.pow((1 - (6.5 * elevation) / 288150), 5.255)));
-                  });
+                  if (mounted) {
+                    setState(() {
+                      locText = ("Loc: (${_locationData.latitude}, ${_locationData.longitude}) @${elevation.toInt()}m");
+                      _pressureValue = (pressure * (math.pow((1 - (6.5 * elevation) / 288150), 5.255)));
+                    });
+                  }
                   //print(_pressureValue);
                 },
               ),
@@ -189,7 +189,7 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
   }
 
   Widget savePreset() {
-    if (AppState.user != null) {
+    if (AppState.fireStoreInstance != null && AppState.user != null) {
       return ElevatedButton(
           child: Text("Save Preset", style: Theme.of(context).textTheme.button),
           onPressed: () {
@@ -246,21 +246,6 @@ class _HomescreenSetupState extends State<HomescreenSetup> {
 /* TODO: Handle unavailable Permissions?! */
 Future<LocationData> _initLocationService() async {
   var location = Location();
-/* 
-  if (!await location.serviceEnabled()) {
-    if (!await location.requestService()) {
-
-    }
-  }
-
-  var permission = await location.hasPermission();
-  if (permission == PermissionStatus.denied) {
-    permission = await location.requestPermission();
-    if (permission != PermissionStatus.granted) {
-      //return;
-    }
-  }
-*/
   var loc = await location.getLocation();
 
   return loc;

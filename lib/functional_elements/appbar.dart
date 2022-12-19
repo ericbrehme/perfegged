@@ -15,7 +15,6 @@ class MyAppBar extends AppBar {
             ],
           ),
           centerTitle: true,
-          // backgroundColor: Colors.grey[700],
           elevation: 0,
           toolbarHeight: 36
         );

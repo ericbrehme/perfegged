@@ -4,8 +4,8 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:perfegged/dataclasses/appstate.dart';
 import 'package:perfegged/functional_elements/appbar.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:perfegged/dataclasses/auth.dart';
 
 import 'dataclasses/preset.dart';
 
@@ -17,20 +17,19 @@ class MyLogin extends StatefulWidget {
 
 class _MyLoginState extends State<MyLogin> {
   User? user; // track the authenticated user here
-
-  final _emailInput = TextEditingController(text: 'example@mail.com');
-  final _passInput = TextEditingController(text: 'password');
-  final db = FirebaseFirestore.instance;
+  final db = Auth.fireStoreInstance;
 
   @override
   void initState() {
     super.initState();
-    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+    Auth.firebaseAuth!.authStateChanges().listen((User? user) async {
       Provider.of<AppState>(context, listen: false).setUser = user;
       AppState.fireStoreInstance = db;
-      setState(() => this.user = user);
+      if (mounted) {
+        setState(() => this.user = user);
+      }
       if (user != null) {
-        final ref = db.collection('users').doc(user.uid).collection('presets').withConverter(
+        final ref = db!.collection('users').doc(user.uid).collection('presets').withConverter(
               fromFirestore: Preset.fromFirestore,
               toFirestore: (Preset preset, options) => preset.toFirestore(),
             );
@@ -45,16 +44,15 @@ class _MyLoginState extends State<MyLogin> {
         } else {
           AppState.list = [];
           final queryList = snapshot.docs;
-          queryList.forEach((element) {
+          for (var element in queryList) {
             AppState.list!.add(Preset(eggWeight: element.data().eggWeight, envTemp: element.data().envTemp, yolkTemp: element.data().yolkTemp));
             AppState.list!.last.id = int.parse(element.id);
-          });
+          }
         }
       } else {
         AppState.init();
       }
     });
-    //setState(() {}); // workaround für Username null bei anonymous login
   }
 
   @override
@@ -62,59 +60,36 @@ class _MyLoginState extends State<MyLogin> {
     return Scaffold(
       appBar: MyAppBar(title: 'Login'),
       body: SingleChildScrollView(
-          child: Column(
-        children: [
-          SignInButtonBuilder(
-            text: 'Sign in anonymously',
-            icon: Icons.account_circle,
-            onPressed: () async => loginAnonymously(),
-            backgroundColor: Colors.blueGrey
-          ),
-/* 
-          SignInButton(
-            Buttons.Email, 
-            onPressed: () => loginWithEmail(_emailInput.text, _passInput.text)
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
-            children: [
-              SizedBox(
-                width: 150,
-                child: TextField(
-                  controller: _emailInput, 
-                  decoration: const InputDecoration(hintText: 'Email')
+          child: Center(
+            child: Column(
+              children: [
+                SignInButtonBuilder(
+                  text: 'Sign in anonymously',
+                  icon: Icons.account_circle,
+                  onPressed: () async => loginAnonymously(),
+                  backgroundColor: Colors.blueGrey
+                ),
+                const SizedBox(height: 16),
+                SignInButton(
+                  Buttons.Google, 
+                  onPressed: () => loginWithGoogle()
+                ),
+                Container(child: userInfo()),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.red), 
+                  onPressed: user != null ? () => logout() : null, 
+                  child: const Text('Sign out')
                 )
-              ),
-              SizedBox(
-                width: 150, 
-                child: TextField(
-                  controller: _passInput, 
-                  obscureText: true, 
-                  decoration: const InputDecoration(hintText: 'Password')
-                )
-              ),
-          ]),
-*/
-          const SizedBox(height: 16),
-          SignInButton(
-            Buttons.Google, 
-            onPressed: () => loginWithGoogle()
-          ),
-          Container(child: userInfo()),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Colors.red), 
-            onPressed: user != null ? () => logout() : null, 
-            child: const Text('Sign out')
+              ],
+            ),
           )
-        ],
-      )),
+        ),
     );
   }
 
   Widget userInfo() {
     if (user == null) {
-      return const Text('Not signed in.');
+      return const Text('Sign in for full functionality');
     } else {
       User user = this.user!;
       if (user.isAnonymous) {
@@ -128,30 +103,17 @@ class _MyLoginState extends State<MyLogin> {
   }
 
   Future<UserCredential> loginAnonymously() {
-    return FirebaseAuth.instance.signInAnonymously();
+    return Auth.firebaseAuth!.signInAnonymously();
   }
-
-/* 
-  Future<UserCredential?> loginWithEmail(String email, String pass) async {
-    try {
-      return await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: pass);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-      return Future.value(null);
-    }
-  }
-*/
 
   Future<UserCredential> loginWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
     final credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return await Auth.firebaseAuth!.signInWithCredential(credential);
   }
 
-  logout() => FirebaseAuth.instance.signOut();
+
+ 
+  logout() => Auth.firebaseAuth!.signOut();
 }

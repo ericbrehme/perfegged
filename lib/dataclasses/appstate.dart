@@ -44,22 +44,6 @@ class AppState extends ChangeNotifier {
   FirebaseFirestore? get getFireStoreInstance => fireStoreInstance;
   set setFireStoreInstance(FirebaseFirestore? fSInstance) => fireStoreInstance = fSInstance;
 
-/*   AppState() {
-    //redundant?
-    if (user == null) {
-      //print(user!.uid);
-      //initPreset();
-    } else {
-      if (fireStoreInstance != null) {
-        getDBPresets();
-      }
-    }
-  } */
-/* 
-  notify() {
-    notifyListeners();
-  }
- */
   static Future? _initDone;
   static Future? get initializingDone => _initDone;
 
@@ -74,7 +58,7 @@ class AppState extends ChangeNotifier {
 
   void getDBPresets() async {
     await fireStoreInstance!.collection("users").doc(user!.uid).get().then((event) {
-      print("${event.data()}");
+      //print("${event.data()}");
     });
   }
 }
