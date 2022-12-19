@@ -77,7 +77,7 @@ class _PresetsState extends State<Presets> {
                                   .doc(AppState.list![index].id.toString())
                                   .delete();
                               AppState.list!.remove(AppState.list![index]);
-                              setState(() {});
+                               if(mounted) setState(() {});
                               Navigator.pop(context);
                             },
                             child: const Text("Delete"))

@@ -39,6 +39,7 @@ dependencies:
   flutter_signin_button: ^2.0.0
   google_sign_in: ^5.4.2
   http: ^0.13.5
+  icons_launcher: ^2.0.6
   location: ^4.4.0
   numberpicker: ^2.1.1
   permission_handler: ^10.2.0
@@ -52,6 +53,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+
+icons_launcher:
+  image_path: 'assets/icon/Icon.png'
+  platforms:
+    android:
+      enable: true
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
@@ -64,6 +72,8 @@ flutter:
   assets:
     - assets/data/
     - assets/sounds/
+    - assets/icon/
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
