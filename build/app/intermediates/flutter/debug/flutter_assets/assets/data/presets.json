@@ -1,0 +1,77 @@
+[
+    {
+      "eggWeight": 37,
+      "envTemp": 20,
+      "yolkTemp": 63
+    },
+    {
+      "eggWeight": 47,
+      "envTemp": 20,
+      "yolkTemp": 65
+    },
+    {
+      "eggWeight": 58,
+      "envTemp": 20,
+      "yolkTemp": 69
+    },
+    {
+      "eggWeight": 68,
+      "envTemp": 20,
+      "yolkTemp": 75
+    },
+    {
+      "eggWeight": 78,
+      "envTemp": 20,
+      "yolkTemp": 85
+    },
+    {
+      "eggWeight": 95,
+      "envTemp": 20,
+      "yolkTemp": 92
+    },
+    {
+      "eggWeight": 90,
+      "envTemp": 20,
+      "yolkTemp": 75
+    },
+    {
+      "eggWeight": 50,
+      "envTemp": 8,
+      "yolkTemp": 72
+    },
+    {
+      "eggWeight": 62,
+      "envTemp": 9,
+      "yolkTemp": 70
+    },
+    {
+      "eggWeight": 80,
+      "envTemp": 10,
+      "yolkTemp": 88
+    },
+    {
+      "eggWeight": 50,
+      "envTemp": 11,
+      "yolkTemp": 66
+    },
+    {
+      "eggWeight": 76,
+      "envTemp": 12,
+      "yolkTemp": 79
+    },
+    {
+      "eggWeight": 72,
+      "envTemp": 13,
+      "yolkTemp": 69
+    },
+    {
+      "eggWeight": 55,
+      "envTemp": 14,
+      "yolkTemp": 95
+    },
+    {
+      "eggWeight": 80,
+      "envTemp": 15,
+      "yolkTemp": 75
+    }
+]
